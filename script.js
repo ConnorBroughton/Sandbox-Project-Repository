@@ -14,73 +14,9 @@ const createMap = () => {
             zoom: initialZoom,
             minZoom: 8
         });
-
-        map.on('load', () => {
-            // Add Public Art Layer
-            map.addSource('public-art', {
-                type: 'geojson',
-                data: 'https://raw.githubusercontent.com/NAnder924/GGR472_Lab2/refs/heads/main/public-art.geojson'
-            });
-
-            map.addLayer({
-                id: 'public-art-layer',
-                type: 'circle',
-                source: 'public-art',
-                paint: {
-                    'circle-radius': 3,
-                    'circle-color': 'orange',
-                    'circle-stroke-width': 0.5,
-                    'circle-stroke-color': 'rgb(252, 134, 0)'
-                }
-            });
-
-            // Add Community Gardens Layer
-            map.addSource('community-gardens', {
-                type: 'geojson',
-                data: 'https://raw.githubusercontent.com/NAnder924/GGR472_Lab2/refs/heads/main/community-gardens-and-food-trees.geojson'
-            });
-
-            map.addLayer({
-                id: 'community-gardens-layer',
-                type: 'circle',
-                source: 'community-gardens',
-                paint: {
-                    'circle-radius': 3,
-                    'circle-color': 'blue',
-                    'circle-stroke-width': 1,
-                    'circle-stroke-color': 'rgb(41, 14, 159)'
-                }
-            });
-
-            // Set initial visibility based on the first slide
-            updateLayerVisibility(currentIndex);
-        });
-    } else {
         map.setZoom(initialZoom); // Only update zoom if the map already exists
     }
 };
-
-// Function to update the visibility of layers based on the carousel index
-const updateLayerVisibility = (index) => {
-    if (map) {
-        if (index === 0) {
-            map.setLayoutProperty('public-art-layer', 'visibility', 'visible');
-            map.setLayoutProperty('community-gardens-layer', 'visibility', 'visible');
-        } else if (index === 1) {
-            map.setLayoutProperty('public-art-layer', 'visibility', 'visible');
-            map.setLayoutProperty('community-gardens-layer', 'visibility', 'none');
-        } else if (index === 2) {
-            map.setLayoutProperty('public-art-layer', 'visibility', 'none');
-            map.setLayoutProperty('community-gardens-layer', 'visibility', 'visible');
-        }
-    }
-};
-
-// Carousel event listener to update visibility when the slide changes
-document.getElementById('carousel').addEventListener('slide.bs.carousel', (event) => {
-    currentIndex = event.to;
-    updateLayerVisibility(currentIndex);
-});
 
 // Initialize the map
 createMap();
