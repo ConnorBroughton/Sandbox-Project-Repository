@@ -48,6 +48,7 @@ p {
     border-radius: 8px;
     height: 275px;
     width: 400px;
+    z-index: 100;
 }
 
 .legend-text-box { /* legend text box details */
@@ -99,4 +100,23 @@ p {
 .legend-text-box a:hover {
     color: #fff;
     box-shadow: inset 100vw 0 0 0 #54b3d6; 
+}
+
+/* colour for the navigation bar */
+.navbar {
+    background-color: #000435;
+    color: #FFFFFF;
+}
+/* colour for various attributes of the navigation bar */
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .dropdown-item {
+    color: #000435;
+}
+
+/* colour for various attributes of the navigation bar */
+.navbar .navbar-brand:hover,
+.navbar .nav-link:hover,
+.navbar .dropdown-item:hover {
+    color: #FFFFFF;
 }
