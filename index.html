@@ -14,4 +14,77 @@
   <title>CATF Renewable Energy Readiness</title>
 </head>
 
+<body>
+    <div id="header">
+        <!-- title of header -->
+        <h1>
+            Community Resources in Vancouver
+        </h1>
+        <!-- buttons in header to zoom in and out-->
+        <div>
+            <button class="btn" onclick="zoomIn()">  <!-- button to zoom in-->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+            </button>
+            <button class="btn" onclick="zoomOut()"> <!-- button to zoom out-->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                  </svg>
+            </button> <!-- button to reset zoom-->
+            <button class="btn" onclick="createMap(10)">
+                Reset
+            </button>
+        </div> <!-- button to show/hide legend-->
+        <button class="btn" id="button" onclick="renameButton()">
+            Show Legend
+        </button>
+    </div>
+    <!-- text within legend and creation of carousel -->
+    <div id="legend" class="legend-box">
+        <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="legend-text-box"> <!-- text in first page of carousel -->
+                    <p>This map displays public art installations and community gardens across Vancouver, revealing their proximity to parks. Enjoy the read!</p>
+                    <!-- legend items -->
+                    <div class="legend-item"> <!-- legend variable -->
+                        <span class="legend-circle red"></span> Public Art installations
+                    </div>
+                    <div class="legend-item"> <!-- legend variable -->
+                        <span class="legend-circle blue"></span> Community Gardens & Food Trees
+                    </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="legend-text-box"> <!-- text in second page of carousel -->
+                    <p>This map displays public art installations across Vancouver. For more information regarding Vancouver's public art follow the link below...</p>
+                    <a href="https://vancouver.ca/parks-recreation-culture/explore-the-public-art-registries.aspx" target="_blank"> Explore Public Art</a>
+                    
+                    <div class="legend-item"> <!-- legend variable -->
+                        <span class="legend-circle red"></span> Public Art installations
+                    </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="legend-text-box"> <!-- text in third page of carousel -->
+                    <p>This map displays community gardens across Vancouver. For more information about community gardens in Vancouver follow the link below... </p>
+                    <a href="https://vancouver.ca/people-programs/community-gardens.aspx" target="_blank">Explore Community Gardens</a>
+                    <div class="legend-item"> <!-- legend variable -->
+                        <span class="legend-circle blue"></span> Community Gardens & Food Trees
+                    </div>
+                </div>
+              </div>
+            </div> <!-- carousel arrows to previous slide -->
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a> <!-- carousel arrows to next slide -->
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+    </div>
+
 </html>
