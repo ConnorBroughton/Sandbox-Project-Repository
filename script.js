@@ -68,14 +68,25 @@ function computeAverageScores(data, dimension) {
   return averages;
 }
 
-// Update the map layer with scores for the selected dimension
 function updateMapForDimension(dimension) {
   const averageScores = computeAverageScores(parsedData, dimension);
-
-  // Apply updated scores to the geoData
+  
+  // Calculate the ranking for each country
+  const allCountryScores = Object.entries(averageScores)
+    .sort((a, b) => b[1] - a[1]);
+    
+  // Create ranking map for easy lookup
+  const rankings = {};
+  allCountryScores.forEach((item, index) => {
+    rankings[item[0]] = index + 1;
+  });
+  
+  // Apply updated scores and rankings to the geoData
   geoData.features.forEach(feature => {
     const country = feature.properties.COUNTRYAFF;
     feature.properties.score = averageScores[country] ?? null;
+    feature.properties.rank = rankings[country] ?? null;
+    feature.properties.totalCountries = allCountryScores.length;
   });
 
   // If the source already exists, just update the data
@@ -87,21 +98,72 @@ function updateMapForDimension(dimension) {
       data: geoData
     });
 
+    // Create a more distinct color scheme for the selected dimension
+    const colorSchemes = {
+      "System Performance": {
+        noData: '#ccc',
+        colors: [
+          [0, '#d73027'],    // Deep red (poorest performance)
+          [20, '#fc8d59'],   // Orange-red
+          [40, '#fee090'],   // Light yellow
+          [60, '#e0f3f8'],   // Light blue
+          [80, '#91bfdb'],   // Medium blue
+          [100, '#4575b4']   // Deep blue (best performance)
+        ]
+      },
+      "Transition Readiness": {
+        noData: '#ccc',
+        colors: [
+          [0, '#8c510a'],    // Brown (least ready)
+          [20, '#d8b365'],   // Light brown
+          [40, '#f6e8c3'],   // Beige
+          [60, '#c7eae5'],   // Light teal
+          [80, '#5ab4ac'],   // Teal
+          [100, '#01665e']   // Dark teal (most ready)
+        ]
+      },
+      "Tech Preparedness": {
+        noData: '#ccc',
+        colors: [
+          [0, '#762a83'],    // Purple (least prepared)
+          [20, '#af8dc3'],   // Light purple
+          [40, '#e7d4e8'],   // Very light purple
+          [60, '#d9f0d3'],   // Light green
+          [80, '#7fbf7b'],   // Medium green
+          [100, '#1b7837']   // Dark green (most prepared)
+        ]
+      },
+      "Introduction": {
+        noData: '#ccc',
+        colors: [
+          [0, '#878787'],    // Dark gray
+          [25, '#bababa'],   // Medium gray
+          [50, '#e0e0e0'],   // Light gray
+          [75, '#4d4d4d'],   // Very dark gray
+          [100, '#000000']   // Black
+        ]
+      }
+    };
+    
+    // Get the color scheme for the current dimension
+    const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
+    
+    // Build the color interpolation array
+    const colorInterpolation = ['interpolate', ['linear'], ['coalesce', ['get', 'score'], -1]];
+    colorInterpolation.push(-1, scheme.noData);
+    
+    // Add all color stops
+    scheme.colors.forEach(stop => {
+      colorInterpolation.push(stop[0], stop[1]);
+    });
+    
     map.addLayer({
       id: 'country-fill',
       type: 'fill',
       source: 'countries',
       paint: {
-        'fill-color': [
-          'interpolate',
-          ['linear'],
-          ['coalesce', ['get', 'score'], -1],
-          -1, '#ccc',
-           0, '#f03b20',
-          50, '#feb24c',
-         100, '#31a354'
-        ],
-        'fill-opacity': 0.8
+        'fill-color': colorInterpolation,
+        'fill-opacity': 0.85
       }
     });
 
@@ -116,6 +178,15 @@ function updateMapForDimension(dimension) {
     });
 
     const popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+
+    // Add cursor change on hover
+    map.on('mouseenter', 'country-fill', () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    
+    map.on('mouseleave', 'country-fill', () => {
+      map.getCanvas().style.cursor = '';
+    });
 
     map.on('mousemove', 'country-fill', e => {
       const props = e.features[0].properties;
@@ -201,6 +272,102 @@ function updateMapForDimension(dimension) {
       popup.remove();
     });
   }
+  
+  // Add a legend to the map
+  updateLegend(dimension);
+}
+
+// Create or update the legend based on the selected dimension
+function updateLegend(dimension) {
+  // Remove existing legend if present
+  const existingLegend = document.querySelector('.map-legend');
+  if (existingLegend) {
+    existingLegend.remove();
+  }
+  
+  // Get the color scheme for the current dimension
+  const colorSchemes = {
+    "System Performance": {
+      title: "System Performance",
+      ranges: [
+        { label: "Excellent (80-100)", color: "#4575b4" },
+        { label: "Good (60-80)", color: "#91bfdb" },
+        { label: "Moderate (40-60)", color: "#e0f3f8" },
+        { label: "Poor (20-40)", color: "#fee090" },
+        { label: "Critical (0-20)", color: "#fc8d59" },
+        { label: "No Data", color: "#ccc" }
+      ]
+    },
+    "Transition Readiness": {
+      title: "Transition Readiness",
+      ranges: [
+        { label: "Very Ready (80-100)", color: "#01665e" },
+        { label: "Ready (60-80)", color: "#5ab4ac" },
+        { label: "Developing (40-60)", color: "#c7eae5" },
+        { label: "Early Stage (20-40)", color: "#f6e8c3" },
+        { label: "Not Ready (0-20)", color: "#d8b365" },
+        { label: "No Data", color: "#ccc" }
+      ]
+    },
+    "Tech Preparedness": {
+      title: "Tech Preparedness",
+      ranges: [
+        { label: "Advanced (80-100)", color: "#1b7837" },
+        { label: "Proficient (60-80)", color: "#7fbf7b" },
+        { label: "Emerging (40-60)", color: "#d9f0d3" },
+        { label: "Basic (20-40)", color: "#e7d4e8" },
+        { label: "Limited (0-20)", color: "#af8dc3" },
+        { label: "No Data", color: "#ccc" }
+      ]
+    },
+    "Introduction": {
+      title: "Index Overview",
+      ranges: [
+        { label: "High (75-100)", color: "#000000" },
+        { label: "Medium-High (50-75)", color: "#4d4d4d" },
+        { label: "Medium (25-50)", color: "#bababa" },
+        { label: "Low (0-25)", color: "#e0e0e0" },
+        { label: "No Data", color: "#ccc" }
+      ]
+    }
+  };
+  
+  const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
+  
+  // Create legend container
+  const legend = document.createElement('div');
+  legend.className = 'map-legend';
+  
+  // Add title
+  const title = document.createElement('div');
+  title.className = 'legend-title';
+  title.textContent = scheme.title;
+  legend.appendChild(title);
+  
+  // Add legend items
+  const itemsContainer = document.createElement('div');
+  itemsContainer.className = 'legend-items';
+  
+  scheme.ranges.forEach(range => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    
+    const colorBox = document.createElement('div');
+    colorBox.className = 'color-box';
+    colorBox.style.backgroundColor = range.color;
+    
+    const label = document.createElement('span');
+    label.textContent = range.label;
+    
+    item.appendChild(colorBox);
+    item.appendChild(label);
+    itemsContainer.appendChild(item);
+  });
+  
+  legend.appendChild(itemsContainer);
+  
+  // Add to map container
+  document.getElementById('map').appendChild(legend);
 }
 
 document.getElementById('systems-performance-nav').addEventListener('click', () => {
