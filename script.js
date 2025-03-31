@@ -4,7 +4,9 @@ const map = new mapboxgl.Map({
   container: "map",
   style: "mapbox://styles/ander924/cm8ukbb3x00nq01s38w30d4md",
   center: [20, 5],
-  zoom: 2
+  zoom: 2.3,
+  minZoom: 1, 
+  maxZoom: 3
 });
 
 let parsedData = []; // Store CSV rows in memory

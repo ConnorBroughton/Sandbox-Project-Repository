@@ -1,28 +1,40 @@
 /* General Reset and Body Styling */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family:  "Inter Tight", sans-serif;
+}
+
+h1 {
+  color: #012169;
+  font-family:  "Inter Tight", sans-serif;
+}
+
+#rightNav {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
 }
 
 /* Top Navigation Bar */
 nav {
   display: flex;
-  justify-content: center;
-  padding: 1rem;
-  background: #f8f8f8;
-  border-bottom: 1px solid #ccc;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background: #f3f2f2;
+  border-bottom: 1px solid #012169;
   align-items: baseline;
 }
 
 nav a {
   margin: 0 1rem;
   text-decoration: none;
-  color: #333;
+  color: #012169;
   font-weight: bold;
 }
 
 nav a.active {
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #012169;
 }
 
 /* Layout Container */
@@ -40,9 +52,12 @@ nav a.active {
 .info-panel {
   flex: 1;
   padding: 1rem;
-  background: #fafafa;
+  background: #ffffff;
   overflow-y: auto;
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #012169;
+  font-family: "Merriweather", serif;
+  color: #012169;
+  border-color: #012169
 }
 
 .info-panel h2 {
@@ -65,7 +80,7 @@ nav a.active {
 .country-popup h3 {
   margin: 0 0 10px 0;
   padding-bottom: 5px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #012169;
 }
 
 .popup-table {
