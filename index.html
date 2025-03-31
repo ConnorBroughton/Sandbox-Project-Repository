@@ -12,7 +12,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
   <!-- JS -->
-  <script src="script.js" defer></script>
+  <script type="module" src="script.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -36,6 +36,11 @@
     </div>
     
   </nav>
+
+  <div class="search-container">
+    <input type="text" id="country-search" placeholder="Search for a country...">
+    <button id="search-button">Search</button>
+  </div>
 
   <div class="container">
     <div id="map" class="active-view"></div>
