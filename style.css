@@ -11,6 +11,7 @@ nav {
   padding: 1rem;
   background: #f8f8f8;
   border-bottom: 1px solid #ccc;
+  align-items: baseline;
 }
 
 nav a {
