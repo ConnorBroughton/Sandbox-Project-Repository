@@ -11,7 +11,27 @@ h1 {
   font-family:  "Inter Tight", sans-serif;
 }
 
-#rightNav {
+h2 {
+  color: #012169;
+}
+
+.leftNav {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.leftNav img {
+  height: 40px;
+  width: auto;
+}
+
+.leftNav .logo {
+  height: 40px;
+  width: auto;
+}
+
+.rightNav {
   display: flex;
   align-items: baseline;
   justify-content: space-evenly;
@@ -43,11 +63,52 @@ nav a.active {
 .container {
   display: flex;
   height: calc(100vh - 60px);
+  position: relative;
+}
+
+/* Full-page content sections */
+.full-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  display: none;
+  overflow-y: auto;
+}
+
+.full-page.active-view {
+  display: block;
+}
+
+.page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section ul, .section ol {
+  margin-left: 1.5rem;
+  line-height: 1.6;
+}
+
+.section p {
+  line-height: 1.6;
 }
 
 /* Mapbox Map */
 #map {
   flex: 2;
+  display: none;
+}
+
+#map.active-view {
+  display: block;
 }
 
 /* Information Panel */
@@ -59,7 +120,12 @@ nav a.active {
   border-left: 1px solid #012169;
   font-family: "Merriweather", serif;
   color: #012169;
-  border-color: #012169
+  border-color: #012169;
+  display: none;
+}
+
+.info-panel.active-view {
+  display: block;
 }
 
 .info-panel h2 {

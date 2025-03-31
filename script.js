@@ -11,6 +11,7 @@ const map = new mapboxgl.Map({
 
 let parsedData = []; // Store CSV rows in memory
 let geoData = null;  // Original GeoJSON
+let currentDimension = "System Performance"; // Track the current dimension
 
 // Load GeoJSON and CSV once
 Promise.all([
@@ -21,6 +22,11 @@ Promise.all([
   geoData = geojson;
 
   map.on('load', () => {
+    // Show map and info panel by default
+    document.getElementById('map').classList.add('active-view');
+    document.querySelector('.info-panel').classList.add('active-view');
+    
+    // Initialize with System Performance
     updateMapForDimension("System Performance");
   });
 });
@@ -29,14 +35,49 @@ Promise.all([
 document.querySelectorAll("nav a").forEach(button => {
   button.addEventListener("click", e => {
     e.preventDefault();
-    const dimension = button.dataset.dimension;
-
+    
+    // Remove active class from all buttons
     document.querySelectorAll("nav a").forEach(btn => btn.classList.remove("active"));
     button.classList.add("active");
-
-    updateMapForDimension(dimension);
+    
+    // Check if this is a page navigation or dimension change
+    if (button.dataset.page) {
+      // Handle page navigation
+      const pageId = button.dataset.page;
+      handlePageNavigation(pageId);
+    } else if (button.dataset.dimension) {
+      // Handle dimension change
+      const dimension = button.dataset.dimension;
+      handleDimensionChange(dimension);
+    }
   });
 });
+
+// Handle navigation to information pages
+function handlePageNavigation(pageId) {
+  // Hide all views
+  document.querySelectorAll('.active-view').forEach(element => {
+    element.classList.remove('active-view');
+  });
+  
+  // Show the selected page
+  document.getElementById(`${pageId}-page`).classList.add('active-view');
+}
+
+// Handle changing map dimensions
+function handleDimensionChange(dimension) {
+  // Hide all views first
+  document.querySelectorAll('.active-view').forEach(element => {
+    element.classList.remove('active-view');
+  });
+  
+  // Show map and info panel
+  document.getElementById('map').classList.add('active-view');
+  document.querySelector('.info-panel').classList.add('active-view');
+  
+  // Update the map for the selected dimension
+  updateMapForDimension(dimension);
+}
 
 // Parse CSV text into JS objects
 function parseCSV(text) {
@@ -71,6 +112,9 @@ function computeAverageScores(data, dimension) {
 }
 
 function updateMapForDimension(dimension) {
+  // Update the current dimension globally
+  currentDimension = dimension;
+  
   const averageScores = computeAverageScores(parsedData, dimension);
   
   // Calculate the ranking for each country
@@ -195,12 +239,13 @@ function updateMapForDimension(dimension) {
       const countryName = props.COUNTRYAFF;
       const score = typeof props.score === 'number' ? props.score.toFixed(1) : 'No data';
       
+      // Use the CURRENT dimension instead of the dimension from when this event was set up
       // Get country-specific data from parsedData
       const countryData = parsedData.filter(row => row.COUNTRYAFF === countryName && 
-                                                  row.Dimension === dimension);
+                                                   row.Dimension === currentDimension);
       
       // Compute ranking
-      const allCountryScores = Object.entries(computeAverageScores(parsedData, dimension))
+      const allCountryScores = Object.entries(computeAverageScores(parsedData, currentDimension))
         .sort((a, b) => b[1] - a[1]);
       const countryRank = allCountryScores.findIndex(item => item[0] === countryName) + 1;
       const totalCountries = allCountryScores.length;
@@ -230,7 +275,7 @@ function updateMapForDimension(dimension) {
           <h3>${countryName}</h3>
           <table class="popup-table">
             <tr>
-              <td><strong>${dimension} Score:</strong></td>
+              <td><strong>${currentDimension} Score:</strong></td>
               <td>${score}/100</td>
             </tr>
             <tr>
@@ -373,15 +418,22 @@ function updateLegend(dimension) {
 }
 
 document.getElementById('systems-performance-nav').addEventListener('click', () => {
-  document.getElementById('description-1').innerHTML = "Systems performance description 1";
-  document.getElementById('description-2').innerHTML = "Systems performance description 2";
-  document.getElementById('description-3').innerHTML = "Systems performance description 3";
+  document.getElementById('description-1').innerHTML = "Energy Access: Measures the population's access to reliable electricity services.";
+  document.getElementById('description-2').innerHTML = "Energy Security: Evaluates the diversity, reliability, and resilience of energy supply.";
+  document.getElementById('description-3').innerHTML = "Energy Equity: Assesses the affordability and fairness of energy distribution across populations.";
   }
 );
 
 document.getElementById('transition-readiness-nav').addEventListener('click', () => {
-  document.getElementById('description-1').innerHTML = "Transition Readiness description 1";
-  document.getElementById('description-2').innerHTML = "Transition Readiness description 2";
-  document.getElementById('description-3').innerHTML = "Transition Readiness description 3";
+  document.getElementById('description-1').innerHTML = "Policy Framework: Evaluates the strength and implementation of energy transition policies.";
+  document.getElementById('description-2').innerHTML = "Investment Environment: Measures the flows and enabling conditions for clean energy investment.";
+  document.getElementById('description-3').innerHTML = "Infrastructure Readiness: Assesses the adaptability of existing energy infrastructure for transition.";
+  }
+);
+
+document.getElementById('tech-preparedness-nav').addEventListener('click', () => {
+  document.getElementById('description-1').innerHTML = "Digital Integration: Measures the use of digital technologies in energy management systems.";
+  document.getElementById('description-2').innerHTML = "Innovation Capacity: Evaluates R&D capabilities and technology adoption rates.";
+  document.getElementById('description-3').innerHTML = "Technical Expertise: Assesses the availability of skilled workforce for advanced energy solutions.";
   }
 );
