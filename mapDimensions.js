@@ -2,6 +2,7 @@
 function updateMapForDimension(dimension) {
     // Update the current dimension globally
     currentDimension = dimension;
+    map.resize()
   
     const averageScores = computeAverageScores(parsedData, dimension);
   
@@ -37,12 +38,11 @@ const colorSchemes = {
     "System Performance": {
       noData: '#ccc',
       colors: [
-        [0, '#d73027'],    // Deep red (poorest performance)
-        [20, '#fc8d59'],   // Orange-red
-        [40, '#fee090'],   // Light yellow
-        [60, '#e0f3f8'],   // Light blue
-        [80, '#91bfdb'],   // Medium blue
-        [100, '#4575b4']   // Deep blue (best performance)
+        [0, '#E76f51'],    // Deep red (poorest performance)
+        [20, '#f4a261'],   // Orange-red
+        [40, '#fff3b0'],   // Light yellow
+        [60, '#a8dadc'],   // Light blue
+        [80, '#457b9d'],   // Medium blue
       ]
     },
     "Transition Readiness": {
@@ -50,21 +50,19 @@ const colorSchemes = {
       colors: [
         [0, '#8c510a'],    // Brown (least ready)
         [20, '#d8b365'],   // Light brown
-        [40, '#f6e8c3'],   // Beige
-        [60, '#c7eae5'],   // Light teal
-        [80, '#5ab4ac'],   // Teal
-        [100, '#01665e']   // Dark teal (most ready)
+        [40, '#fefae0'],   // Beige
+        [60, '#606c38'],   // Light teal
+        [80, '#283618'],   // Teal
       ]
     },
     "Tech Preparedness": {
       noData: '#ccc',
       colors: [
-        [0, '#762a83'],    // Purple (least prepared)
-        [20, '#af8dc3'],   // Light purple
-        [40, '#e7d4e8'],   // Very light purple
-        [60, '#d9f0d3'],   // Light green
-        [80, '#7fbf7b'],   // Medium green
-        [100, '#1b7837']   // Dark green (most prepared)
+        [0, '#89023e'],    // Purple (least prepared)
+        [20, '#ea638c'],   // Light purple
+        [40, '#ffd9da'],   // Very light purple
+        [60, '#83c5be'],   // Light green
+        [80, '#006d77'],   // Medium green
       ]
     },
     "Introduction": {
@@ -111,9 +109,7 @@ const colorSchemes = {
           'line-width': 1
         }
       });
-  
-      const popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
-  
+
       // Add cursor change on hover
       map.on('mouseenter', 'country-fill', () => {
         map.getCanvas().style.cursor = 'pointer';

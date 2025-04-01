@@ -1,10 +1,6 @@
 function updateLegend(dimension) {
     // Remove existing legend if present
-    const existingLegend = document.querySelector('.map-legend');
-    if (existingLegend) {
-      existingLegend.remove();
-    }
-    
+    clearLegend()
     // Get the color scheme for the current dimension
     const colorSchemes = {
       "System Performance": {
@@ -89,3 +85,10 @@ function updateLegend(dimension) {
     // Add to map container
     document.getElementById('map').appendChild(legend);
   }
+
+function clearLegend() {
+  const existingLegend = document.querySelector('.map-legend');
+  if (existingLegend) {
+    existingLegend.remove();
+  }
+}
