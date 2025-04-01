@@ -32,74 +32,75 @@ function updateMapForDimension(dimension) {
         data: geoData
       });
   
-      // Create a more distinct color scheme for the selected dimension
-      const colorSchemes = {
-        "System Performance": {
-          noData: '#ccc',
-          colors: [
-            [0, '#d73027'],    // Deep red (poorest performance)
-            [20, '#fc8d59'],   // Orange-red
-            [40, '#fee090'],   // Light yellow
-            [60, '#e0f3f8'],   // Light blue
-            [80, '#91bfdb'],   // Medium blue
-            [100, '#4575b4']   // Deep blue (best performance)
-          ]
-        },
-        "Transition Readiness": {
-          noData: '#ccc',
-          colors: [
-            [0, '#8c510a'],    // Brown (least ready)
-            [20, '#d8b365'],   // Light brown
-            [40, '#f6e8c3'],   // Beige
-            [60, '#c7eae5'],   // Light teal
-            [80, '#5ab4ac'],   // Teal
-            [100, '#01665e']   // Dark teal (most ready)
-          ]
-        },
-        "Tech Preparedness": {
-          noData: '#ccc',
-          colors: [
-            [0, '#762a83'],    // Purple (least prepared)
-            [20, '#af8dc3'],   // Light purple
-            [40, '#e7d4e8'],   // Very light purple
-            [60, '#d9f0d3'],   // Light green
-            [80, '#7fbf7b'],   // Medium green
-            [100, '#1b7837']   // Dark green (most prepared)
-          ]
-        },
-        "Introduction": {
-          noData: '#ccc',
-          colors: [
-            [0, '#878787'],    // Dark gray
-            [25, '#bababa'],   // Medium gray
-            [50, '#e0e0e0'],   // Light gray
-            [75, '#4d4d4d'],   // Very dark gray
-            [100, '#000000']   // Black
-          ]
-        }
-      };
+ // Color schemes remain the same
+const colorSchemes = {
+    "System Performance": {
+      noData: '#ccc',
+      colors: [
+        [0, '#d73027'],    // Deep red (poorest performance)
+        [20, '#fc8d59'],   // Orange-red
+        [40, '#fee090'],   // Light yellow
+        [60, '#e0f3f8'],   // Light blue
+        [80, '#91bfdb'],   // Medium blue
+        [100, '#4575b4']   // Deep blue (best performance)
+      ]
+    },
+    "Transition Readiness": {
+      noData: '#ccc',
+      colors: [
+        [0, '#8c510a'],    // Brown (least ready)
+        [20, '#d8b365'],   // Light brown
+        [40, '#f6e8c3'],   // Beige
+        [60, '#c7eae5'],   // Light teal
+        [80, '#5ab4ac'],   // Teal
+        [100, '#01665e']   // Dark teal (most ready)
+      ]
+    },
+    "Tech Preparedness": {
+      noData: '#ccc',
+      colors: [
+        [0, '#762a83'],    // Purple (least prepared)
+        [20, '#af8dc3'],   // Light purple
+        [40, '#e7d4e8'],   // Very light purple
+        [60, '#d9f0d3'],   // Light green
+        [80, '#7fbf7b'],   // Medium green
+        [100, '#1b7837']   // Dark green (most prepared)
+      ]
+    },
+    "Introduction": {
+      noData: '#ccc',
+      colors: [
+        [0, '#878787'],    // Dark gray
+        [25, '#bababa'],   // Medium gray
+        [50, '#e0e0e0'],   // Light gray
+        [75, '#4d4d4d'],   // Very dark gray
+        [100, '#000000']   // Black
+      ]
+    }
+  };
   
-      // Get the color scheme for the current dimension
-      const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
+  // Get the color scheme for the current dimension
+  const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
   
-      // Build the color interpolation array
-      const colorInterpolation = ['interpolate', ['linear'], ['coalesce', ['get', 'score'], -1]];
-      colorInterpolation.push(-1, scheme.noData);
-  
-      // Add all color stops
-      scheme.colors.forEach(stop => {
-        colorInterpolation.push(stop[0], stop[1]);
-      });
-  
-      map.addLayer({
-        id: 'country-fill',
-        type: 'fill',
-        source: 'countries',
-        paint: {
-          'fill-color': colorInterpolation,
-          'fill-opacity': 0.85
-        }
-      });
+  // Create a simple classification with discrete color boundaries
+  map.addLayer({
+    id: 'country-fill',
+    type: 'fill',
+    source: 'countries',
+    paint: {
+      'fill-color': [
+        'case',
+        ['==', ['get', 'score'], null], scheme.noData,  // No data
+        ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum (shouldn't occur)
+        ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
+        ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
+        ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
+        ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
+        scheme.colors[4][1]  // Fifth range (highest)
+      ],
+      'fill-opacity': 0.85
+    }
+  });
   
       map.addLayer({
         id: 'country-outline',

@@ -32,7 +32,7 @@
 <body>
   <nav>
     <div class="leftNav">
-      <h1>CATF: African Renewable Energy Transition Assessment</h1>
+      <h1>CATF: African Renewable Energy Transition</h1>
       <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/Clean-Air-Task-Force.png" alt="CATF Logo" />
     </div>
     <div class="rightNav">
@@ -74,17 +74,38 @@
         <h1>Introduction to the Africa Energy Map (PENDING TEXT UPDATES)</h1>
         <div class="section">
           <h2>About the Energy Map</h2>
-          <p>if a monkey like me can make this website imagine what something with higher intelligence could do!</p>
+          <p>The Clean Air Task Force seeks to meet the world’s rising energy demand in a way that is financially, socially, and 
+            environmentally sustainable. As an organization that advocates for the technology and policy changes needed to achieve 
+            a zero-emissions, high-energy planet, we strive for global futures where emerging economies invest in clean energy. 
+            Specifically in sub-saharan Africa, where 80% of the world’s population without electricity lives, there remains a crucial gap 
+            in addressing the challenges and opportunities regarding energy technology deployment and readiness. The composite index displayed by 
+            this map seeks to fill a gap in existing reports by providing a comprehensive assessment of the current state of energy technology 
+            deployment in Africa while also incorporating critical factors such as country planning, potential resources, grid infrastructure, 
+            policy, and innovation.</p>
         </div>
         <div class="section">
-          <h2>Curry the Goat FR</h2>
-          <p>This tool allows policymakers, researchers, and stakeholders to:</p>
-          <ul>
-            <li>Explore energy performance metrics across African nations</li>
-            <li>Compare countries based on their readiness for energy transition</li>
-            <li>Analyze technological preparedness for future energy challenges</li>
-            <li>Identify strengths and areas for improvement in each country's energy ecosystem</li>
-          </ul>
+          <h2>How to Use This Tool</h2>
+          <p>Navigate through the map to explore different aspects of Africa's energy transition landscape:</p>
+          
+          <div class="how-to-use">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-img">Select a dimension tab</div>
+              <p>Choose between System Performance, Transition Readiness, or Tech Preparedness to view different aspects of each country's energy profile.</p>
+            </div>
+            
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-img">Click on countries</div>
+              <p>Select any country to view detailed scores, rankings, and key metrics specific to that nation.</p>
+            </div>
+            
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-img">Explore sub-dimensions</div>
+              <p>Examine specific components like energy access, policy frameworks, and technology-specific preparedness for a deeper understanding.</p>
+            </div>
+          </div>
         </div>
         <div class="section">
           <h2>Data Sources</h2>
@@ -94,39 +115,201 @@
     </div>
     
     <!-- Methodology Page -->
-    <div id="methodology-page" class="full-page">
-      <div class="page-content">
-        <h1>Methodology</h1>
-        <div class="section">
-          <h2>Data Collection Process (PENDING TEXT UPDATES)</h2>
-          <p>Blah blah blah whatever we'll write whatever we want here idrc</p>
-          <ol>
-            <li>Primary data collection from official government sources</li>
-            <li>Secondary data verification through international organizations</li>
-            <li>Standardization of metrics across different reporting systems</li>
-            <li>Validation through expert review and cross-referencing</li>
-          </ol>
+<!-- Methodology Page -->
+<div id="methodology-page" class="full-page">
+  <div class="page-content">
+    <h1>Methodology</h1>
+      
+    <div class="section">
+      <h2>Overview</h2>
+      <p>Our assessment framework evaluates countries based on three primary dimensions, each containing multiple subdimensions that provide a comprehensive understanding of a nation's energy landscape. The data comes from a wide range of reputable international sources to ensure accuracy and consistency.</p>
+    </div>
+      
+    <div class="section">
+      <h2>Dimensions and Subdimensions</h2>
+      
+      <!-- Transition Readiness -->
+      <div class="static-dimension">
+        <div class="dimension-header">
+          <h3>Transition Readiness</h3>
+          <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/CATF%20Images/search.png" alt="Transition Readiness Icon" class="dimension-icon">
         </div>
-        <div class="section">
-          <h2>Scoring Framework</h2>
-          <p>Each dimension is evaluated on a scale of 0-100, with higher scores indicating better performance:</p>
-          <ul>
-            <li><strong>System Performance (0-100):</strong> Measures the current efficiency, reliability, and coverage of energy systems</li>
-            <li><strong>Transition Readiness (0-100):</strong> Assesses preparation for transitioning to sustainable energy sources</li>
-            <li><strong>Tech Preparedness (0-100):</strong> Evaluates technological capacity for implementing modern energy solutions</li>
-          </ul>
+        <p><strong>Transition Readiness</strong> measures a country's ability to shift to sustainable energy by evaluating political commitment, investment access, governance, infrastructure, workforce capabilities, and the electricity mix.</p>
+        
+        <div class="subdimension-grid">
+          <div class="subdimension-card">
+            <h4>Regulation and Political Commitment</h4>
+            <p>Assesses policies, regulatory frameworks, electrification planning, carbon pricing, and a country's commitment to sustainable energy goals.</p>
+            <p class="source-note">Adapted from the World Bank's Regulatory Indicators for Sustainable Energy (RISE)</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Capital and Investment</h4>
+            <p>Evaluates foreign investment, economic freedom, climate finance access, and contributions from financial institutions supporting clean energy.</p>
+            <p class="source-note">Based on data from IMF, World Bank, and Heritage Foundation</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Institutions and Governance</h4>
+            <p>Examines government stability, regulatory effectiveness, corruption perception, and sovereign credit ratings.</p>
+            <p class="source-note">Incorporates sovereign credit ratings, Rule of Law scores, and Corruption Perceptions Index</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Infrastructure and Business Environment</h4>
+            <p>Assesses infrastructure development, logistics performance, and the business environment for clean energy innovation.</p>
+            <p class="source-note">Based on AfDB, World Bank, and WIPO data</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Human Capital</h4>
+            <p>Evaluates STEM education, workforce skills, research investment, and public spending on education.</p>
+            <p class="source-note">Data from ILO, UNESCO, OECD, and World Bank</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Power System Structure</h4>
+            <p>Analyzes the electricity generation mix, per capita generation, and the balance between supply and demand.</p>
+            <p class="source-note">Data from IEA, IRENA, and EMBER</p>
+          </div>
         </div>
-        <div class="section">
-          <h2>Sub-Dimensions</h2>
-          <p>Each main dimension is composed of multiple sub-dimensions that provide a more detailed analysis of specific aspects within the broader category. These sub-dimensions are weighted based on their relative importance to create the aggregate scores.</p>
+      </div>
+      
+      <!-- System Performance -->
+      <div class="static-dimension">
+        <div class="dimension-header">
+          <h3>System Performance</h3>
+          <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/CATF%20Images/system-speed.png" alt="System Performance Icon" class="dimension-icon">
         </div>
-        <div class="section">
-          <h2>Limitations</h2>
-          <p>While we strive for accuracy and comprehensiveness, our analysis is subject to data availability constraints. Some countries may have more complete datasets than others, which can affect comparison accuracy.</p>
+        <p><strong>System Performance Index</strong> measures the reliability, sustainability, accessibility, and security of a country's energy system.</p>
+        
+        <div class="subdimension-grid">
+          <div class="subdimension-card">
+            <h4>Economic Development and Growth</h4>
+            <p>Assesses power reliability, affordability, net imports, and financial impacts of energy system inefficiencies.</p>
+            <p class="source-note">Based on SAIDI, SAIFI, and World Bank data</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Environmental Sustainability</h4>
+            <p>Evaluates energy intensity, carbon emissions, air pollution, and biodiversity impacts.</p>
+            <p class="source-note">Data from World Bank and IEA</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Energy Access and Security</h4>
+            <p>Examines electricity access, energy diversity, grid resilience, mini-grid development, and energy import dependency.</p>
+            <p class="source-note">Based on World Bank, RISE, IEA, and AMDA data</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Technology Preparedness -->
+      <div class="static-dimension">
+        <div class="dimension-header">
+          <h3>Technology-Specific Preparedness</h3>
+          <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/CATF%20Images/eco-technology.png" alt="Technology Preparedness Icon" class="dimension-icon">
+        </div>
+        <p><strong>Technology-Specific Preparedness</strong> evaluates a country's readiness to implement clean energy technologies based on regulatory support, investment, and infrastructure.</p>
+        
+        <div class="subdimension-grid">
+          <div class="subdimension-card">
+            <h4>Solar Technologies</h4>
+            <p>Assesses installed capacity, investment, land and water use, and regulatory support for photovoltaic and concentrated solar power based on World Bank Global Solar Atlas data.</p>
+            <p>Key indicators include average theoretical, practical, and economic potential, installed PV capacity, and investment in solar PV energy.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Wind Turbines</h4>
+            <p>Evaluates installed capacity, investment, regulatory support, and wind resource potential using data from IEA, IRENA, and Global Wind Atlas.</p>
+            <p>Measures indicators like installed wind capacity, share of total capacity, investment, LCOE, and public acceptance.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Hydropower</h4>
+            <p>Examines installed capacity, investment, water stress, regulatory support, and flood risk based on World Resources Institute Aqueduct data.</p>
+            <p>Considers factors like baseline water stress, drought risk, riverine flooding, and public acceptance.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Natural Gas Turbine Power</h4>
+            <p>Examines installed capacity, investment, reserves, land use, and liquefied natural gas trade using BP Statistical Review and IEA data.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Geothermal Power</h4>
+            <p>Assesses installed capacity, investment, land and water use, and regulatory support based on IRENA and International Geothermal Association data.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Nuclear Power</h4>
+            <p>Evaluates installed capacity, investment, regulatory frameworks, uranium resources, and public acceptance using IAEA and OECD data.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Biomass-Based Power</h4>
+            <p>Assesses installed capacity, investment, land use, and regulatory support for bioenergy from various sources.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Hydrogen</h4>
+            <p>Evaluates production capacity, investment, regulatory frameworks, and infrastructure for hydrogen development based on IEA data.</p>
+          </div>
+          
+          <div class="subdimension-card">
+            <h4>Carbon Capture and Storage</h4>
+            <p>Examines investment, installed capacity, regulatory support, and CO₂ reduction targets using Global CCS Institute data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <div class="section">
+      <h2>Scoring Framework</h2>
+      <p>Each dimension and subdimension is evaluated on a scale of 0-100, with higher scores indicating better performance:</p>
+        
+      <ul>
+        <li><strong>System Performance (0-100):</strong> Measures the current efficiency, reliability, and coverage of energy systems</li>
+        <li><strong>Transition Readiness (0-100):</strong> Assesses preparation for transitioning to sustainable energy sources</li>
+        <li><strong>Tech Preparedness (0-100):</strong> Evaluates technological capacity for implementing modern energy solutions</li>
+      </ul>
+        
+      <p>Subdimensions are weighted based on their relative importance to create the aggregate scores. The final country score is a composite of these three dimensions, providing a comprehensive assessment of each nation's energy transition preparedness.</p>
+    </div>
+      
+    <div class="section">
+      <h2>Data Sources</h2>
+      <p>Our assessment draws from a wide range of reputable international organizations, research institutions, and industry reports:</p>
+        
+      <div class="source-list">
+        <div class="source-item">
+          <strong>International Organizations</strong>
+          World Bank, International Energy Agency (IEA), International Renewable Energy Agency (IRENA), United Nations
+        </div>
+          
+        <div class="source-item">
+          <strong>Financial Institutions</strong>
+          IMF, African Development Bank, European Bank for Reconstruction and Development
+        </div>
+          
+        <div class="source-item">
+          <strong>Research Institutions</strong>
+          World Resources Institute, Global CCS Institute, International Geothermal Association
+        </div>
+          
+        <div class="source-item">
+          <strong>Industry Reports</strong>
+          EMBER, Statistical Review of World Energy (BP), Global Wind Atlas
+        </div>
+          
+        <div class="source-item">
+          <strong>Governance Indices</strong>
+          Transparency International, World Justice Project, Worldwide Governance Indicators
         </div>
       </div>
     </div>
   </div>
+</div>
 </body>
 
 </html>
