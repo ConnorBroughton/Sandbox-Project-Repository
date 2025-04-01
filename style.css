@@ -1,14 +1,17 @@
 /* General Reset and Body Styling */
 body {
   margin: 0;
-  font-family:  "Inter Tight", sans-serif;
-  overflow-x: hidden; 
-  overflow-y: hidden;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  overflow: hidden; /* Prevent scrolling on body */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  box-sizing: border-box; /* Include borders in size calculation */
 }
 
 h1 {
   color: #012169;
-  font-family:  "Inter Tight", sans-serif;
+  font-family:  "Montserrat", sans-serif;
 }
 
 h2 {
@@ -39,6 +42,7 @@ h2 {
 
 /* Top Navigation Bar */
 nav {
+  font-family:  "Cabin", sans-serif;
   display: flex;
   justify-content: space-between;
   padding-left: 2rem;
@@ -46,6 +50,8 @@ nav {
   background: #f3f2f2;
   border-bottom: 1px solid #012169;
   align-items: baseline;
+  height: 60px; /* Set explicit height */
+  box-sizing: border-box; /* Include padding in height calculation */
 }
 
 nav a {
@@ -64,6 +70,8 @@ nav a.active {
   display: flex;
   height: calc(100vh - 60px);
   position: relative;
+  overflow: hidden; /* Prevent any potential overflow */
+  box-sizing: border-box; /* Include borders in height calculation */
 }
 
 /* Full-page content sections */
@@ -76,6 +84,7 @@ nav a.active {
   background-color: #ffffff;
   display: none;
   overflow-y: auto;
+  box-sizing: border-box; /* Include padding in size calculations */
 }
 
 .full-page.active-view {
@@ -105,6 +114,8 @@ nav a.active {
 #map {
   flex: 2;
   display: none;
+  height: 100%; /* Ensure it takes full height */
+  width: 100%; /* Ensure it takes full width */
 }
 
 #map.active-view {
@@ -118,7 +129,7 @@ nav a.active {
   background: #ffffff;
   overflow-y: auto;
   border-left: 1px solid #012169;
-  font-family: "Merriweather", serif;
+  font-family: "Inter Tight", sans-serif;
   color: #012169;
   border-color: #012169;
   display: none;
@@ -134,30 +145,6 @@ nav a.active {
 
 .subdimension {
   margin-bottom: 1rem;
-}
-
-/* Country Popup Styling */
-.mapboxgl-popup {
-  max-width: 300px;
-}
-
-.mapboxgl-popup-content {
-  padding: 15px;
-}
-
-.country-popup h3 {
-  margin: 0 0 10px 0;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #012169;
-}
-
-.popup-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.popup-table td {
-  padding: 4px;
 }
 
 .sub-heading {
@@ -184,12 +171,14 @@ nav a.active {
 }
 
 .legend-title {
+  font-family: "Cabin", sans-serif;
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 12px;
 }
 
 .legend-items {
+  font-family: "Montserrat", sans-serif;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -219,6 +208,7 @@ nav a.active {
   padding: 5px;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* No height properties to affect layout */
 }
 
 #country-search {
@@ -226,7 +216,7 @@ nav a.active {
   border: 1px solid #ccc;
   border-radius: 4px 0 0 4px;
   width: 200px;
-  font-family: "Inter Tight", sans-serif;
+  font-family: "Cabin", sans-serif;
 }
 
 #search-button {
@@ -236,7 +226,7 @@ nav a.active {
   border: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  font-family: "Inter Tight", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 #search-button:hover {
@@ -272,49 +262,147 @@ nav a.active {
   background-color: #f5f5f5;
 }
 
-/* Add this to your style.css */
+/* Country Popup Styling - Enhanced Version */
 
-/* Style for the hover popup */
-.country-popup-hover {
-  padding: 5px;
-  max-width: 220px;
+/* Main popup container */
+.mapboxgl-popup {
+  max-width: 350px; /* Slightly wider to accommodate content */
+  max-height: 90vh; /* Limit maximum height to 90% of viewport height */
+  overflow: visible; /* Allow popup to expand to fit content */
 }
 
-.country-popup-hover h3 {
-  margin: 0 0 5px 0;
-  padding-bottom: 3px;
-  border-bottom: 1px solid #012169;
-  font-size: 16px;
-}
-
-.country-popup-hover p {
-  margin: 5px 0;
-  font-size: 13px;
-}
-
-.country-popup-hover small {
-  display: block;
-  margin-top: 5px;
-  color: #666;
-  font-style: italic;
-  font-size: 11px;
-}
-
-/* Enhance the style for the detailed click popup */
-.country-popup {
-  max-width: 300px;
-  padding: 5px;
-}
-
-.country-popup h3 {
-  margin: 0 0 10px 0;
-  padding-bottom: 5px;
-  border-bottom: 2px solid #012169;
-  font-size: 18px;
-}
-
-/* Make the click popup stand out more */
+/* Add scrolling if content is too tall */
 .mapboxgl-popup-content {
+  max-height: calc(90vh - 40px); /* Leave room for top/bottom margins */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+}
+
+/* Popup content container */
+.mapboxgl-popup-content {
+  padding: 15px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
+}
+
+/* Country popup styling */
+.country-popup {
+  font-family: "Montserrat", sans-serif;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+/* Country name heading */
+.country-popup h3 {
+  font-family: "Cabin", sans-serif;
+  margin: 0 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #012169;
+  font-size: 18px;
+  text-align: center;
+  color: #012169;
+}
+
+/* Data table */
+.popup-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.popup-table td {
+  padding: 6px 4px;
+}
+
+/* Right-align all value cells (second column) */
+.popup-table td:nth-child(2) {
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Highlight styles for different score values */
+.score-highlight {
+  background-color: #fc8d59;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Similar highlighting for other scores */
+.metric-highlight {
+  background-color: #91bfdb; /* Blue background for metrics */
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Strength score highlight */
+.strength-highlight {
+  background-color: #1b7837; /* Green background */
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Challenge score highlight */
+.challenge-highlight {
+  background-color: #d73027; /* Red background */
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Style for rank display */
+.rank-display {
+  font-weight: bold;
+  color: #012169;
+}
+
+/* Section headings in table */
+.sub-heading {
+  background-color: #f2f2f2;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.sub-heading td {
+  padding: 8px 4px;
+  font-weight: bold;
+  color: #012169;
+}
+
+/* Labels in data rows */
+.popup-table tr:not(.sub-heading) td:first-child {
+  color: #555;
+  font-weight: 500;
+}
+
+/* Strength row highlight */
+.popup-table tr.strength-row td:last-child {
+  color: #1b7837;
+}
+
+/* Challenge row highlight */
+.popup-table tr.challenge-row td:last-child {
+  color: #d73027;
 }
