@@ -32,7 +32,7 @@ function updateMapForDimension(dimension) {
         data: geoData
       });
   
- // Color schemes remain the same
+      // Create a more distinct color scheme for the selected dimension
 const colorSchemes = {
     "System Performance": {
       noData: '#ccc',
