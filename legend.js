@@ -4,39 +4,39 @@ function updateLegend(dimension) {
     if (existingLegend) {
       existingLegend.remove();
     }
-  
+    
     // Get the color scheme for the current dimension
     const colorSchemes = {
       "System Performance": {
         title: "System Performance",
         ranges: [
-          { label: "Excellent (80-100)", color: "#4575b4" },
-          { label: "Good (60-80)", color: "#91bfdb" },
-          { label: "Moderate (40-60)", color: "#e0f3f8" },
-          { label: "Poor (20-40)", color: "#fee090" },
-          { label: "Critical (0-20)", color: "#fc8d59" },
+          { label: "Excellent (80-100)", color: "#457b9d" },
+          { label: "Good (60-80)", color: "#a8dadc" },
+          { label: "Moderate (40-60)", color: "#fff3b0" },
+          { label: "Poor (20-40)", color: "#f4a261" },
+          { label: "Critical (0-20)", color: "#E76f51" },
           { label: "No Data", color: "#ccc" }
         ]
       },
       "Transition Readiness": {
         title: "Transition Readiness",
         ranges: [
-          { label: "Very Ready (80-100)", color: "#01665e" },
-          { label: "Ready (60-80)", color: "#5ab4ac" },
-          { label: "Developing (40-60)", color: "#c7eae5" },
-          { label: "Early Stage (20-40)", color: "#f6e8c3" },
-          { label: "Not Ready (0-20)", color: "#d8b365" },
+          { label: "Very Ready (80-100)", color: "#283618" },
+          { label: "Ready (60-80)", color: "#606c38" },
+          { label: "Developing (40-60)", color: "#fefae0" },
+          { label: "Early Stage (20-40)", color: "#dda15e" },
+          { label: "Not Ready (0-20)", color: "#bc6c25" },
           { label: "No Data", color: "#ccc" }
         ]
       },
       "Tech Preparedness": {
         title: "Tech Preparedness",
         ranges: [
-          { label: "Advanced (80-100)", color: "#1b7837" },
-          { label: "Proficient (60-80)", color: "#7fbf7b" },
-          { label: "Emerging (40-60)", color: "#d9f0d3" },
-          { label: "Basic (20-40)", color: "#e7d4e8" },
-          { label: "Limited (0-20)", color: "#af8dc3" },
+          { label: "Advanced (80-100)", color: "#006d77" },
+          { label: "Proficient (60-80)", color: "#83c5be" },
+          { label: "Emerging (40-60)", color: "#ffd9da" },
+          { label: "Basic (20-40)", color: "#ea638c" },
+          { label: "Limited (0-20)", color: "#89023e" },
           { label: "No Data", color: "#ccc" }
         ]
       },
