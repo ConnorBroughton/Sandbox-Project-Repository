@@ -47,124 +47,121 @@ document.body.appendChild(searchResultsContainer);
 // Variable to store the current search popup
 let currentSearchPopup = null;
 
-// Function to show country details
 function showCountryDetails(countryName) {
-  // Find the country feature
-  const feature = geoData.features.find(f => f.properties.COUNTRYAFF === countryName);
-  if (!feature) return;
-  
-  // Get country-specific data
-  const countryData = parsedData.filter(row => 
-    row.COUNTRYAFF === countryName && row.Dimension === currentDimension
-  );
-  
-  // Compute ranking
-  const allCountryScores = Object.entries(computeAverageScores(parsedData, currentDimension))
-    .sort((a, b) => b[1] - a[1]);
-  const countryRank = allCountryScores.findIndex(item => item[0] === countryName) + 1;
-  const totalCountries = allCountryScores.length;
-  
-  // Get sub-dimension scores
-  const subDimensions = {};
-  countryData.forEach(row => {
-    subDimensions[row['Sub-Dimension']] = row.Score;
-  });
-  
-  // Get top sub-dimension and challenge sub-dimension
-  let topSubDim = {name: 'N/A', score: 0};
-  let lowSubDim = {name: 'N/A', score: 100};
-  
-  Object.entries(subDimensions).forEach(([name, score]) => {
-    if (score > topSubDim.score) {
-      topSubDim = {name, score};
-    }
-    if (score < lowSubDim.score) {
-      lowSubDim = {name, score};
-    }
-  });
-  
-  // Calculate average score
-  const score = feature.properties.score !== null ? 
-    feature.properties.score.toFixed(1) : 'No data';
-  
-  // Build popup HTML
-  let popupHTML = `
+    // Find the country feature
+    const feature = geoData.features.find(f => f.properties.COUNTRYAFF === countryName);
+    if (!feature) return;
+    
+    // Get country-specific data
+    const countryData = parsedData.filter(row => 
+      row.COUNTRYAFF === countryName && row.Dimension === currentDimension
+    );
+    
+    // Compute ranking
+    const allCountryScores = Object.entries(computeAverageScores(parsedData, currentDimension))
+      .sort((a, b) => b[1] - a[1]);
+    const countryRank = allCountryScores.findIndex(item => item[0] === countryName) + 1;
+    const totalCountries = allCountryScores.length;
+    
+    // Get sub-dimension scores
+    const subDimensions = {};
+    countryData.forEach(row => {
+      subDimensions[row['Sub-Dimension']] = row.Score;
+    });
+    
+    // Get top sub-dimension and challenge sub-dimension
+    let topSubDim = {name: 'N/A', score: 0};
+    let lowSubDim = {name: 'N/A', score: 100};
+    
+    Object.entries(subDimensions).forEach(([name, score]) => {
+      if (score > topSubDim.score) {
+        topSubDim = {name, score};
+      }
+      if (score < lowSubDim.score) {
+        lowSubDim = {name, score};
+      }
+    });
+    
+    // Calculate average score
+    const score = feature.properties.score !== null ? 
+      feature.properties.score.toFixed(1) : 'No data';
+    
+    // Build popup HTML
+    let popupHTML = `
     <div class="country-popup">
       <h3>${countryName}</h3>
       <table class="popup-table">
         <tr>
           <td><strong>${currentDimension} Score:</strong></td>
-          <td>${score}/100</td>
+          <td><span class="score-highlight">${score}/100</span></td>
         </tr>
         <tr>
           <td><strong>Ranking:</strong></td>
-          <td>${countryRank} of ${totalCountries}</td>
+          <td><span class="rank-display">#${countryRank}</span> of ${totalCountries}</td>
         </tr>
         <tr class="sub-heading">
-          <td colspan="2"><strong>Key Metrics</strong></td>
+          <td colspan="2">Key Metrics</td>
         </tr>`;
-  
-  // Add the top 3 sub-dimensions if available
-  const subDimKeys = Object.keys(subDimensions).slice(0, 3);
-  subDimKeys.forEach(subDim => {
-    const subScore = subDimensions[subDim];
-    popupHTML += `
+    
+    // Add ALL sub-dimensions instead of just the first three
+    Object.entries(subDimensions).forEach(([subDim, subScore]) => {
+      popupHTML += `
         <tr>
           <td>${subDim}:</td>
-          <td>${subScore ? subScore.toFixed(1) : 'N/A'}</td>
+          <td><span class="metric-highlight">${subScore ? subScore.toFixed(1) : 'N/A'}</span></td>
         </tr>`;
-  });
-  
-  popupHTML += `
+    });
+    
+    popupHTML += `
         <tr class="sub-heading">
-          <td colspan="2"><strong>Highlights</strong></td>
+          <td colspan="2">Highlights</td>
         </tr>
-        <tr>
+        <tr class="strength-row">
           <td><strong>Strength:</strong></td>
-          <td>${topSubDim.name}: ${topSubDim.score.toFixed(1)}</td>
+          <td>${topSubDim.name} <span class="strength-highlight">${topSubDim.score.toFixed(1)}</span></td>
         </tr>
-        <tr>
+        <tr class="challenge-row">
           <td><strong>Challenge:</strong></td>
-          <td>${lowSubDim.name}: ${lowSubDim.score.toFixed(1)}</td>
+          <td>${lowSubDim.name} <span class="challenge-highlight">${lowSubDim.score.toFixed(1)}</span></td>
         </tr>
       </table>
     </div>`;
-  
-  // Remove any existing search popup before creating a new one
-  if (currentSearchPopup) {
-    currentSearchPopup.remove();
-  }
-  
-  // Create and display a custom popup
-  const searchPopup = new mapboxgl.Popup({
-    closeButton: true,
-    closeOnClick: false
-  });
-  
-  // Store the current popup for later removal
-  currentSearchPopup = searchPopup;
-  
-  // Get coordinates for the country centroid
-  const bounds = new mapboxgl.LngLatBounds();
-  feature.geometry.coordinates.forEach(ring => {
-    ring.forEach(coord => {
-      bounds.extend(coord);
+    
+    // Remove any existing search popup before creating a new one
+    if (currentSearchPopup) {
+      currentSearchPopup.remove();
+    }
+    
+    // Create and display a custom popup
+    const searchPopup = new mapboxgl.Popup({
+      closeButton: true,
+      closeOnClick: false,
+      maxWidth: '400px' // Make the popup wider to accommodate more content
     });
-  });
-  
-  // If the country is found on the map, fly to its location
-  map.flyTo({
-    center: bounds.getCenter(),
-    zoom: 3,
-    essential: true
-  });
-  
-  // Display popup
-  searchPopup.setLngLat(bounds.getCenter())
-    .setHTML(popupHTML)
-    .addTo(map);
-}
-
+    
+    // Store the current popup for later removal
+    currentSearchPopup = searchPopup;
+    
+    // Get coordinates for the country centroid
+    const bounds = new mapboxgl.LngLatBounds();
+    feature.geometry.coordinates.forEach(ring => {
+      ring.forEach(coord => {
+        bounds.extend(coord);
+      });
+    });
+    
+    // If the country is found on the map, fly to its location
+    map.flyTo({
+      center: bounds.getCenter(),
+      zoom: 3,
+      essential: true
+    });
+    
+    // Display popup
+    searchPopup.setLngLat(bounds.getCenter())
+      .setHTML(popupHTML)
+      .addTo(map);
+  }
 
 // Set up event listeners once the map is loaded
 map.on('load', () => {

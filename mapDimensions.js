@@ -124,102 +124,100 @@ function updateMapForDimension(dimension) {
   
       let currentClickPopup = null;
   
-  // Add click event handler to show detailed information
-  map.on('click', 'country-fill', e => {
-    const props = e.features[0].properties;
-    const countryName = props.COUNTRYAFF;
-    const score = typeof props.score === 'number' ? props.score.toFixed(1) : 'No data';
-    
-    // Use the CURRENT dimension
-    const countryData = parsedData.filter(row => row.COUNTRYAFF === countryName && 
-                                                 row.Dimension === currentDimension);
-    
-    // Compute ranking
-    const allCountryScores = Object.entries(computeAverageScores(parsedData, currentDimension))
-      .sort((a, b) => b[1] - a[1]);
-    const countryRank = allCountryScores.findIndex(item => item[0] === countryName) + 1;
-    const totalCountries = allCountryScores.length;
-    
-    // Get sub-dimension scores
-    const subDimensions = {};
-    countryData.forEach(row => {
-      subDimensions[row['Sub-Dimension']] = row.Score;
-    });
-    
-    // Get top sub-dimension and challenge sub-dimension
-    let topSubDim = {name: 'N/A', score: 0};
-    let lowSubDim = {name: 'N/A', score: 100};
-    
-    Object.entries(subDimensions).forEach(([name, score]) => {
-      if (score > topSubDim.score) {
-        topSubDim = {name, score};
-      }
-      if (score < lowSubDim.score) {
-        lowSubDim = {name, score};
-      }
-    });
-    
-    let popupHTML = `
-  <div class="country-popup">
-    <h3>${countryName}</h3>
-    <table class="popup-table">
-      <tr>
-        <td><strong>${currentDimension} Score:</strong></td>
-        <td><span class="score-highlight">${score}/100</span></td>
-      </tr>
-      <tr>
-        <td><strong>Ranking:</strong></td>
-        <td><span class="rank-display">#${countryRank}</span> of ${totalCountries}</td>
-      </tr>
-      <tr class="sub-heading">
-        <td colspan="2">Key Metrics</td>
-      </tr>`;
-
-// Add the top 3 sub-dimensions with highlighted scores
-const subDimKeys = Object.keys(subDimensions).slice(0, 3);
-subDimKeys.forEach(subDim => {
-  const subScore = subDimensions[subDim];
-  popupHTML += `
-      <tr>
-        <td>${subDim}:</td>
-        <td><span class="metric-highlight">${subScore ? subScore.toFixed(1) : 'N/A'}</span></td>
-      </tr>`;
-});
-
-popupHTML += `
-      <tr class="sub-heading">
-        <td colspan="2">Highlights</td>
-      </tr>
-      <tr class="strength-row">
-        <td><strong>Strength:</strong></td>
-        <td>${topSubDim.name} <span class="strength-highlight">${topSubDim.score.toFixed(1)}</span></td>
-      </tr>
-      <tr class="challenge-row">
-        <td><strong>Challenge:</strong></td>
-        <td>${lowSubDim.name} <span class="challenge-highlight">${lowSubDim.score.toFixed(1)}</span></td>
-      </tr>
-    </table>
-  </div>`;
-    
-    // Remove any existing click popup before creating a new one
-    if (currentClickPopup) {
-      currentClickPopup.remove();
-    }
-    
-    // Create and display the detailed popup
-    const clickPopup = new mapboxgl.Popup({
-      closeButton: true,
-      closeOnClick: false
-    });
-    
-    // Store the current popup for later removal
-    currentClickPopup = clickPopup;
-    
-    // Display popup
-    clickPopup.setLngLat(e.lngLat)
-      .setHTML(popupHTML)
-      .addTo(map);
-  });
+      map.on('click', 'country-fill', e => {
+        const props = e.features[0].properties;
+        const countryName = props.COUNTRYAFF;
+        const score = typeof props.score === 'number' ? props.score.toFixed(1) : 'No data';
+        
+        // Use the CURRENT dimension
+        const countryData = parsedData.filter(row => row.COUNTRYAFF === countryName && 
+                                                   row.Dimension === currentDimension);
+        
+        // Compute ranking
+        const allCountryScores = Object.entries(computeAverageScores(parsedData, currentDimension))
+          .sort((a, b) => b[1] - a[1]);
+        const countryRank = allCountryScores.findIndex(item => item[0] === countryName) + 1;
+        const totalCountries = allCountryScores.length;
+        
+        // Get sub-dimension scores
+        const subDimensions = {};
+        countryData.forEach(row => {
+          subDimensions[row['Sub-Dimension']] = row.Score;
+        });
+        
+        // Get top sub-dimension and challenge sub-dimension
+        let topSubDim = {name: 'N/A', score: 0};
+        let lowSubDim = {name: 'N/A', score: 100};
+        
+        Object.entries(subDimensions).forEach(([name, score]) => {
+          if (score > topSubDim.score) {
+            topSubDim = {name, score};
+          }
+          if (score < lowSubDim.score) {
+            lowSubDim = {name, score};
+          }
+        });
+        
+        let popupHTML = `
+      <div class="country-popup">
+        <h3>${countryName}</h3>
+        <table class="popup-table">
+          <tr>
+            <td><strong>${currentDimension} Score:</strong></td>
+            <td><span class="score-highlight">${score}/100</span></td>
+          </tr>
+          <tr>
+            <td><strong>Ranking:</strong></td>
+            <td><span class="rank-display">#${countryRank}</span> of ${totalCountries}</td>
+          </tr>
+          <tr class="sub-heading">
+            <td colspan="2">Key Metrics</td>
+          </tr>`;
+      
+        // Add ALL sub-dimensions instead of just the first three
+        Object.entries(subDimensions).forEach(([subDim, subScore]) => {
+          popupHTML += `
+          <tr>
+            <td>${subDim}:</td>
+            <td><span class="metric-highlight">${subScore ? subScore.toFixed(1) : 'N/A'}</span></td>
+          </tr>`;
+        });
+      
+        popupHTML += `
+          <tr class="sub-heading">
+            <td colspan="2">Highlights</td>
+          </tr>
+          <tr class="strength-row">
+            <td><strong>Strength:</strong></td>
+            <td>${topSubDim.name} <span class="strength-highlight">${topSubDim.score.toFixed(1)}</span></td>
+          </tr>
+          <tr class="challenge-row">
+            <td><strong>Challenge:</strong></td>
+            <td>${lowSubDim.name} <span class="challenge-highlight">${lowSubDim.score.toFixed(1)}</span></td>
+          </tr>
+        </table>
+      </div>`;
+        
+        // Remove any existing click popup before creating a new one
+        if (currentClickPopup) {
+          currentClickPopup.remove();
+        }
+        
+        // Create and display the detailed popup
+        const clickPopup = new mapboxgl.Popup({
+          closeButton: true,
+          closeOnClick: false,
+          maxWidth: '400px' // Make the popup wider to accommodate more content
+        });
+        
+        // Store the current popup for later removal
+        currentClickPopup = clickPopup;
+        
+        // Display popup
+        clickPopup.setLngLat(e.lngLat)
+          .setHTML(popupHTML)
+          .addTo(map);
+      });
   
   // Add hover event handlers to highlight countries
   map.on('mousemove', 'country-fill', e => {
