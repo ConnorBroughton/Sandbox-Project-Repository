@@ -11,7 +11,7 @@ const map = new mapboxgl.Map({
 
 let parsedData = []; // Store CSV rows in memory
 let geoData = null;  // Original GeoJSON
-let currentDimension = "System Performance"; // Track the current dimension
+let currentDimension; // Track the current dimension
 
 // Load GeoJSON and CSV once
 Promise.all([

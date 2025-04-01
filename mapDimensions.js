@@ -1,9 +1,9 @@
 // update legend based on selection
 function updateMapForDimension(dimension) {
     // Update the current dimension globally
-    currentDimension = dimension;
+    currentDimension = dimension
     map.resize()
-  
+
     const averageScores = computeAverageScores(parsedData, dimension);
   
     // Calculate the ranking for each country
@@ -32,7 +32,7 @@ function updateMapForDimension(dimension) {
         type: 'geojson',
         data: geoData
       });
-  
+    }
       // Create a more distinct color scheme for the selected dimension
 const colorSchemes = {
     "System Performance": {
@@ -78,8 +78,17 @@ const colorSchemes = {
   };
   
   // Get the color scheme for the current dimension
-  const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
+  const scheme = colorSchemes[dimension]
   
+  if (map.getLayer('country-fill')) {
+    map.removeLayer('country-fill');
+  }
+  if (map.getLayer('country-outline')) {
+      map.removeLayer('country-outline');
+  }
+  if (map.getLayer('country-hover-outline')) {
+      map.removeLayer('country-hover-outline');
+  }
   // Create a simple classification with discrete color boundaries
   map.addLayer({
     id: 'country-fill',
@@ -301,7 +310,6 @@ const colorSchemes = {
       currentClickPopup = null;
     }
   });
-    }
   
     // Add a legend to the map
     updateLegend(dimension);
