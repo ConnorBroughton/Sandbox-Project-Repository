@@ -36,39 +36,36 @@
       <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/Clean-Air-Task-Force.png" alt="CATF Logo" />
     </div>
     <div class="rightNav">
-      <a href="#" data-page="introduction" id="introduction-nav">Introduction</a>
+      <a href="#" class="active"data-page="introduction" id="introduction-nav">Introduction</a>
       <a href="#" data-page="methodology" id="methodology-nav">Methodology</a>
-      <a href="#" class="active" data-dimension="System Performance" id="systems-performance-nav">System Performance</a>
+      <a href="#" data-dimension="System Performance" id="systems-performance-nav">System Performance</a>
       <a href="#" data-dimension="Transition Readiness" id="transition-readiness-nav">Transition Readiness</a>
       <a href="#" data-dimension="Tech Preparedness" id="tech-preparedness-nav">Tech Preparedness</a>
     </div>
   </nav>
 
-  <div class="search-container">
-    <input type="text" id="country-search" placeholder="Search for a country...">
-    <button id="search-button">Search</button>
-  </div>
+  
 
   <div class="container">
-    <div id="map" class="active-view"></div>
-    <div class="info-panel map-view active-view">
-      <h2>Sub-Dimensions</h2>
+    <div id="map"></div>
+    <div class="info-panel map-view">
+      <h2 id="title">Sub-Dimensions</h2>
       <div class="subdimension">
-        <strong>Sub-Dimension 1</strong>
+        <strong id="header-1">Sub-Dimension 1</strong>
         <p id="description-1">Systems performance description 1</p>
       </div>
       <div class="subdimension">
-        <strong>Sub-Dimension 2</strong>
+        <strong id="header-2">Sub-Dimension 2</strong>
         <p id="description-2">Systems performance description 2</p>
       </div>
       <div class="subdimension">
-        <strong>Sub-Dimension 3</strong>
+        <strong id="header-3">Sub-Dimension 3</strong>
         <p id="description-3">Systems performance description 3</p>
       </div>
     </div>
     
     <!-- Introduction Page -->
-    <div id="introduction-page" class="full-page">
+    <div id="introduction-page" class="full-page active-view">
       <div class="page-content">
         <h1>Introduction to the Africa Energy Map (PENDING TEXT UPDATES)</h1>
         <div class="section">
