@@ -14,6 +14,10 @@ let geoData = null;  // Original GeoJSON
 let currentDimension; // Track the current dimension
 let mapMoved = false;
 
+const redirectCATF = () => {
+  window.open("https://www.catf.us/", "_blank");
+}
+
 // Load GeoJSON and CSV once
 Promise.all([
   fetch('https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/Africa_Countries.geojson').then(res => res.json()),
