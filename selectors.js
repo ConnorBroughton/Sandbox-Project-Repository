@@ -1,3 +1,14 @@
+// Handle navigation to information pages
+function handlePageNavigation(pageId) {
+    // Hide all views
+    document.querySelectorAll('.active-view').forEach(element => {
+      element.classList.remove('active-view');
+    });
+    
+    // Show the selected page
+    document.getElementById(`${pageId}-page`).classList.add('active-view');
+  }
+
 // Button click behavior
 document.querySelectorAll("nav a").forEach(button => {
     button.addEventListener("click", e => {
@@ -19,7 +30,6 @@ document.querySelectorAll("nav a").forEach(button => {
       }
     });
   });
-
 
 const infoPanel = document.getElementById('info-panel');
 

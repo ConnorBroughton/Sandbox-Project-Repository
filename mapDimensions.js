@@ -1,29 +1,71 @@
 // update legend based on selection
 function updateMapForDimension(dimension) {
-    // Update the current dimension globally
-    currentDimension = dimension
-    map.resize()
+  // Update the current dimension globally
+  currentDimension = dimension;
 
-    const averageScores = computeAverageScores(parsedData, dimension);
-  
-    // Calculate the ranking for each country
-    const allCountryScores = Object.entries(averageScores)
-      .sort((a, b) => b[1] - a[1]);
-  
-    // Create ranking map for easy lookup
-    const rankings = {};
-    allCountryScores.forEach((item, index) => {
-      rankings[item[0]] = index + 1;
+  const averageScores = computeAverageScores(parsedData, dimension);
+
+  // Calculate the ranking for each country
+  const allCountryScores = Object.entries(averageScores)
+    .sort((a, b) => b[1] - a[1]);
+
+  // Create ranking map for easy lookup
+  const rankings = {};
+  allCountryScores.forEach((item, index) => {
+    rankings[item[0]] = index + 1;
+  });
+
+  // Apply updated scores and rankings to the geoData
+  geoData.features.forEach(feature => {
+    const country = feature.properties.COUNTRYAFF;
+    feature.properties.score = averageScores[country] ?? null;
+    feature.properties.rank = rankings[country] ?? null;
+    feature.properties.totalCountries = allCountryScores.length;
+  });
+
+  // Get the color scheme for the current dimension
+  const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
+
+  // If the source already exists, update the data
+  if (map.getSource('countries')) {
+    map.getSource('countries').setData(geoData);
+    
+    // Important: Update the paint property of the layer to use the new color scheme
+    map.setPaintProperty('country-fill', 'fill-color', [
+      'case',
+      ['==', ['get', 'score'], null], scheme.noData,  // No data
+      ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum
+      ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
+      ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
+      ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
+      ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
+      scheme.colors[4][1]  // Fifth range (highest)
+    ]);
+  } else {
+    // First time setup - create the source and layer
+    map.addSource('countries', {
+      type: 'geojson',
+      data: geoData
     });
-  
-    // Apply updated scores and rankings to the geoData
-    geoData.features.forEach(feature => {
-      const country = feature.properties.COUNTRYAFF;
-      feature.properties.score = averageScores[country] ?? null;
-      feature.properties.rank = rankings[country] ?? null;
-      feature.properties.totalCountries = allCountryScores.length;
+
+    map.addLayer({
+      id: 'country-fill',
+      type: 'fill',
+      source: 'countries',
+      paint: {
+        'fill-color': [
+          'case',
+          ['==', ['get', 'score'], null], scheme.noData,  // No data
+          ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum
+          ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
+          ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
+          ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
+          ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
+          scheme.colors[4][1]  // Fifth range (highest)
+        ],
+        'fill-opacity': 0.85
+      }
     });
-  
     // If the source already exists, just update the data
     if (map.getSource('countries')) {
       map.getSource('countries').setData(geoData);
@@ -102,7 +144,6 @@ function updateMapForDimension(dimension) {
       'fill-opacity': 0.85
     }
   });
-
       // Add cursor change on hover
       map.on('mouseenter', 'country-fill', () => {
         map.getCanvas().style.cursor = 'pointer';
@@ -309,6 +350,7 @@ function updateMapForDimension(dimension) {
       currentClickPopup = null;
     }
   });
+    }
   
     // Add a legend to the map
     updateLegend(dimension);

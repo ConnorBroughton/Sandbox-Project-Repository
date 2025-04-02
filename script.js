@@ -25,7 +25,36 @@ Promise.all([
 ]).then(([geojson, csvText]) => {
   parsedData = parseCSV(csvText);
   geoData = geojson;
+
+  // In script.js, modify the map.on('load') function
+  map.on('load', () => {
+    // Instead of showing map and info panel by default,
+    // we'll make the introduction page active by default
+    handlePageNavigation('introduction');
+
+    // Add the 'active' class to the introduction navigation button
+    document.querySelectorAll("nav a").forEach(btn => btn.classList.remove("active"));
+    document.getElementById('introduction-nav').classList.add("active");
+
+    // Initialize map data anyway (for when user switches to it)
+    updateMapForDimension("System Performance");
+  });
 });
+
+// Handle changing map dimensions
+function handleDimensionChange(dimension) {
+  // Hide all views first
+  document.querySelectorAll('.active-view').forEach(element => {
+    element.classList.remove('active-view');
+  });
+
+  // Show map and info panel
+  document.getElementById('map').classList.add('active-view');
+  document.querySelector('.info-panel').classList.add('active-view');
+
+  // Update the map for the selected dimension
+  updateMapForDimension(dimension);
+}
 
 // Parse CSV text into JS objects
 function parseCSV(text) {

@@ -75,14 +75,6 @@ nav a.active {
   box-sizing: border-box; /* Include borders in height calculation */
 }
 
-.container.active-view {
-  display: flex;
-  height: calc(100vh - 60px);
-  position: relative;
-  overflow: hidden; /* Prevent any potential overflow */
-  box-sizing: border-box; /* Include borders in height calculation */
-}
-
 /* Full-page content sections */
 .full-page {
   position: absolute;
@@ -119,18 +111,16 @@ nav a.active {
   line-height: 1.6;
 }
 
-
 /* Mapbox Map */
 #map {
-  flex: 1; /* Takes remaining space */
-  min-width: 70%; /* Adjust width */
+  flex: 2;
+  display: none;
+  height: 100%; /* Ensure it takes full height */
+  width: 100%; /* Ensure it takes full width */
 }
 
 #map.active-view {
-  flex: 2;
-  display: flex;
-  width: calc(100% - 300px); /* Adjust based on panel width */
-  height: calc(100vh - 60px);
+  display: block;
 }
 
 /* Information Panel */
@@ -144,7 +134,6 @@ nav a.active {
   color: #012169;
   border-color: #012169;
   display: none;
-  width: 30%;
 }
 
 .info-panel.active-view {
