@@ -6,12 +6,17 @@ const map = new mapboxgl.Map({
   center: [20, 5],
   zoom: 2.3,
   minZoom: 1,
-  maxZoom: 3
+  maxZoom: 3,
 });
 
 let parsedData = []; // Store CSV rows in memory
 let geoData = null;  // Original GeoJSON
-let currentDimension = "System Performance"; // Track the current dimension
+let currentDimension; // Track the current dimension
+let mapMoved = false;
+
+const redirectCATF = () => {
+  window.open("https://www.catf.us/", "_blank");
+}
 
 // Load GeoJSON and CSV once
 Promise.all([

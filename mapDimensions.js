@@ -66,23 +66,89 @@ function updateMapForDimension(dimension) {
         'fill-opacity': 0.85
       }
     });
-      map.addLayer({
-        id: 'country-outline',
-        type: 'line',
-        source: 'countries',
-        paint: {
-          'line-color': '#fff',
-          'line-width': 1
-        }
+    // If the source already exists, just update the data
+    if (map.getSource('countries')) {
+      map.getSource('countries').setData(geoData);
+    } else {
+      map.addSource('countries', {
+        type: 'geojson',
+        data: geoData
       });
+    }
+      // Create a more distinct color scheme for the selected dimension
+  const colorSchemes = {
+    "System Performance": {
+      noData: '#ccc',
+      colors: [
+        [0, '#E76f51'],    // Deep red (poorest performance)
+        [20, '#f4a261'],   // Orange-red
+        [40, '#fff3b0'],   // Light yellow
+        [60, '#a8dadc'],   // Light blue
+        [80, '#457b9d'],   // Medium blue
+      ]
+    },
+    "Transition Readiness": {
+      noData: '#ccc',
+      colors: [
+        [0, '#8c510a'],    // Brown (least ready)
+        [20, '#d8b365'],   // Light brown
+        [40, '#fefae0'],   // Beige
+        [60, '#606c38'],   // Light teal
+        [80, '#283618'],   // Teal
+      ]
+    },
+    "Tech Preparedness": {
+      noData: '#ccc',
+      colors: [
+        [0, '#89023e'],    // Purple (least prepared)
+        [20, '#ea638c'],   // Light purple
+        [40, '#ffd9da'],   // Very light purple
+        [60, '#83c5be'],   // Light green
+        [80, '#006d77'],   // Medium green
+      ]
+    },
+    "Introduction": {
+      noData: '#ccc',
+      colors: [
+        [0, '#878787'],    // Dark gray
+        [25, '#bababa'],   // Medium gray
+        [50, '#e0e0e0'],   // Light gray
+        [75, '#4d4d4d'],   // Very dark gray
+        [100, '#000000']   // Black
+      ]
+    }
+  };
   
-      const popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+  // Get the color scheme for the current dimension
+  const scheme = colorSchemes[dimension]
   
+  if (map.getLayer('country-fill')) {
+    map.removeLayer('country-fill');
+  }
+  // Create a simple classification with discrete color boundaries
+  map.addLayer({
+    id: 'country-fill',
+    type: 'fill',
+    source: 'countries',
+    paint: {
+      'fill-color': [
+        'case',
+        ['==', ['get', 'score'], null], scheme.noData,  // No data
+        ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum (shouldn't occur)
+        ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
+        ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
+        ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
+        ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
+        scheme.colors[4][1]  // Fifth range (highest)
+      ],
+      'fill-opacity': 0.85
+    }
+  });
       // Add cursor change on hover
       map.on('mouseenter', 'country-fill', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
-  
+
       map.on('mouseleave', 'country-fill', () => {
         map.getCanvas().style.cursor = '';
       });
@@ -124,7 +190,7 @@ function updateMapForDimension(dimension) {
         });
         
         let popupHTML = `
-      <div class="country-popup">
+      <div class="country-popup" id="country-popup">
         <h3>${countryName}</h3>
         <table class="popup-table">
           <tr>
@@ -199,7 +265,21 @@ function updateMapForDimension(dimension) {
         type: 'FeatureCollection',
         features: [feature]
       };
+
+      map.removeLayer('country-hover-outline');
       
+      // Add highlight outline around the hovered country
+      map.addLayer({
+        id: 'country-hover-outline',
+        type: 'line',
+        source: 'hover-source',
+        paint: {
+          'line-color': '#ffcc00', // Bright yellow highlight
+          'line-width': 3,
+          'line-opacity': 0.8
+        }
+      });
+
       map.getSource('hover-source').setData(hoverFeature);
     } else {
       // First time hover - create the source and layer
@@ -211,6 +291,7 @@ function updateMapForDimension(dimension) {
         }
       });
       
+
       // Add highlight outline around the hovered country
       map.addLayer({
         id: 'country-hover-outline',

@@ -33,7 +33,7 @@
   <nav>
     <div class="leftNav">
       <h1>CATF: African Renewable Energy Transition</h1>
-      <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/Clean-Air-Task-Force.png" alt="CATF Logo" />
+      <img src="https://raw.githubusercontent.com/ConnorBroughton/Sandbox-Project-Repository/main/Clean-Air-Task-Force.png" alt="CATF Logo" onclick="redirectCATF()" style="cursor: pointer;"/>
     </div>
     <div class="rightNav">
       <a href="#" data-page="introduction" id="introduction-nav">Introduction</a>
@@ -50,9 +50,9 @@
   </div>
 
   <div class="container">
-    <div id="map" class="active-view"></div>
-    <div class="info-panel map-view active-view">
-      <h2>Sub-Dimensions</h2>
+    <div id="map"></div>
+    <div class="info-panel map-view" id="info-panel">
+      <h2 id="title">Sub-Dimensions</h2>
       <div class="subdimension">
         <strong>Sub-Dimension 1</strong>
         <p id="description-1">Systems performance description 1</p>
@@ -107,7 +107,7 @@
           </div>
         </div>
         <div class="section">
-          <h2>Data Sources</h2>
+          <h2>Sandbox Project Overview</h2>
           <p>The Africa Energy Map draws from a comprehensive range of reliable sources including national energy ministries, international organizations, academic research, and industry reports to provide the most accurate representation of the continent's energy landscape.</p>
         </div>
       </div>
