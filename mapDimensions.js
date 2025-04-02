@@ -318,8 +318,8 @@ function updateMapForDimension(dimension) {
           'visibility': 'visible'
       },
       'paint': {
-          'line-color': '#000000', // Border color
-          
+          'line-color': 'black', // Border color
+          'line-width': 0.5
       }
   });
   } else {
@@ -332,8 +332,8 @@ function updateMapForDimension(dimension) {
           'visibility': 'visible'
       },
       'paint': {
-          'line-color': '#000000', // Border color
-          
+          'line-color': 'black', // Border color
+          'line-width': 0.5
       }
     })
   }

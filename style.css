@@ -49,7 +49,6 @@ nav {
   padding-left: 2rem;
   padding-right: 2rem;
   background: #f3f2f2;
-  border-bottom: 1px solid #012169;
   align-items: center;
   height: 60px; /* Set explicit height */
   box-sizing: border-box; /* Include padding in height calculation */
@@ -139,7 +138,6 @@ nav a.active {
   padding: 1rem;
   background: #ffffff;
   overflow-y: auto;
-  border-left: 1px solid #012169;
   font-family: "Inter Tight", sans-serif;
   color: #012169;
   border-color: #012169;
