@@ -25,12 +25,16 @@ base_data = [
 
 # 54 African countries
 african_countries = [
-    "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde", "Cameroon", "Central African Republic",
-    "Chad", "Comoros", "Congo (Brazzaville)", "Congo (Kinshasa)", "Côte d'Ivoire", "Djibouti", "Egypt", "Equatorial Guinea",
-    "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Kenya", "Lesotho", "Liberia",
-    "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger",
-    "Nigeria", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa",
-    "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"
+    'Burkina Faso', 'Cabo Verde', "Côte d'Ivoire", 'Gambia', 'Ghana', 'Guinea',
+    'Guinea-Bissau', 'Liberia', 'Mali', 'Mauritania', 'Morocco', 'Senegal',
+    'Sierra Leone', 'Angola', 'Botswana', 'Burundi', 'Comoros', 'Congo',
+    'Congo DRC', 'Gabon', 'Kenya', 'Lesotho', 'Malawi', 'Mozambique',
+    'Namibia', 'Rwanda', 'Sao Tome and Principe', 'South Africa', 'Eswatini',
+    'Tanzania', 'Zambia', 'Zimbabwe', 'Madagascar', 'Mauritius', 'Seychelles',
+    'Algeria', 'Benin', 'Cameroon', 'Central African Republic', 'Chad',
+    'Equatorial Guinea', 'Libya', 'Niger', 'Nigeria', 'Togo', 'Tunisia',
+    'Djibouti', 'Egypt', 'Eritrea', 'Ethiopia', 'South Sudan', 'Sudan',
+    'Uganda', 'Somalia'
 ]
 
 # Function to generate fake data within ±15% of base value
@@ -58,7 +62,7 @@ for country in african_countries:
 
 # Create DataFrame and export
 df = pd.DataFrame(rows)
-output_path = "/Users/jimbo/Downloads/Africa_Energy_Index_FAKE.csv"
+output_path = "/Users/jimbo/Downloads/Africa_Energy_Index_FINAL.csv"
 df.to_csv(output_path, index=False)
 
 print(f"✅ File saved to: {output_path}")
