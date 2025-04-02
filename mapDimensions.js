@@ -1,107 +1,70 @@
-// update legend based on selection
 function updateMapForDimension(dimension) {
-    // Update the current dimension globally
-    currentDimension = dimension;
-  
-    const averageScores = computeAverageScores(parsedData, dimension);
-  
-    // Calculate the ranking for each country
-    const allCountryScores = Object.entries(averageScores)
-      .sort((a, b) => b[1] - a[1]);
-  
-    // Create ranking map for easy lookup
-    const rankings = {};
-    allCountryScores.forEach((item, index) => {
-      rankings[item[0]] = index + 1;
-    });
-  
-    // Apply updated scores and rankings to the geoData
-    geoData.features.forEach(feature => {
-      const country = feature.properties.COUNTRYAFF;
-      feature.properties.score = averageScores[country] ?? null;
-      feature.properties.rank = rankings[country] ?? null;
-      feature.properties.totalCountries = allCountryScores.length;
-    });
-  
-    // If the source already exists, just update the data
-    if (map.getSource('countries')) {
-      map.getSource('countries').setData(geoData);
-    } else {
-      map.addSource('countries', {
-        type: 'geojson',
-        data: geoData
-      });
-  
-      // Create a more distinct color scheme for the selected dimension
-const colorSchemes = {
-    "System Performance": {
-      noData: '#ccc',
-      colors: [
-        [0, '#d73027'],    // Deep red (poorest performance)
-        [20, '#fc8d59'],   // Orange-red
-        [40, '#fee090'],   // Light yellow
-        [60, '#e0f3f8'],   // Light blue
-        [80, '#91bfdb'],   // Medium blue
-        [100, '#4575b4']   // Deep blue (best performance)
-      ]
-    },
-    "Transition Readiness": {
-      noData: '#ccc',
-      colors: [
-        [0, '#8c510a'],    // Brown (least ready)
-        [20, '#d8b365'],   // Light brown
-        [40, '#f6e8c3'],   // Beige
-        [60, '#c7eae5'],   // Light teal
-        [80, '#5ab4ac'],   // Teal
-        [100, '#01665e']   // Dark teal (most ready)
-      ]
-    },
-    "Tech Preparedness": {
-      noData: '#ccc',
-      colors: [
-        [0, '#762a83'],    // Purple (least prepared)
-        [20, '#af8dc3'],   // Light purple
-        [40, '#e7d4e8'],   // Very light purple
-        [60, '#d9f0d3'],   // Light green
-        [80, '#7fbf7b'],   // Medium green
-        [100, '#1b7837']   // Dark green (most prepared)
-      ]
-    },
-    "Introduction": {
-      noData: '#ccc',
-      colors: [
-        [0, '#878787'],    // Dark gray
-        [25, '#bababa'],   // Medium gray
-        [50, '#e0e0e0'],   // Light gray
-        [75, '#4d4d4d'],   // Very dark gray
-        [100, '#000000']   // Black
-      ]
-    }
-  };
-  
+  // Update the current dimension globally
+  currentDimension = dimension;
+
+  const averageScores = computeAverageScores(parsedData, dimension);
+
+  // Calculate the ranking for each country
+  const allCountryScores = Object.entries(averageScores)
+    .sort((a, b) => b[1] - a[1]);
+
+  // Create ranking map for easy lookup
+  const rankings = {};
+  allCountryScores.forEach((item, index) => {
+    rankings[item[0]] = index + 1;
+  });
+
+  // Apply updated scores and rankings to the geoData
+  geoData.features.forEach(feature => {
+    const country = feature.properties.COUNTRYAFF;
+    feature.properties.score = averageScores[country] ?? null;
+    feature.properties.rank = rankings[country] ?? null;
+    feature.properties.totalCountries = allCountryScores.length;
+  });
+
   // Get the color scheme for the current dimension
   const scheme = colorSchemes[dimension] || colorSchemes["System Performance"];
-  
-  // Create a simple classification with discrete color boundaries
-  map.addLayer({
-    id: 'country-fill',
-    type: 'fill',
-    source: 'countries',
-    paint: {
-      'fill-color': [
-        'case',
-        ['==', ['get', 'score'], null], scheme.noData,  // No data
-        ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum (shouldn't occur)
-        ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
-        ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
-        ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
-        ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
-        scheme.colors[4][1]  // Fifth range (highest)
-      ],
-      'fill-opacity': 0.85
-    }
-  });
-  
+
+  // If the source already exists, update the data
+  if (map.getSource('countries')) {
+    map.getSource('countries').setData(geoData);
+    
+    // Important: Update the paint property of the layer to use the new color scheme
+    map.setPaintProperty('country-fill', 'fill-color', [
+      'case',
+      ['==', ['get', 'score'], null], scheme.noData,  // No data
+      ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum
+      ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
+      ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
+      ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
+      ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
+      scheme.colors[4][1]  // Fifth range (highest)
+    ]);
+  } else {
+    // First time setup - create the source and layer
+    map.addSource('countries', {
+      type: 'geojson',
+      data: geoData
+    });
+
+    map.addLayer({
+      id: 'country-fill',
+      type: 'fill',
+      source: 'countries',
+      paint: {
+        'fill-color': [
+          'case',
+          ['==', ['get', 'score'], null], scheme.noData,  // No data
+          ['<', ['get', 'score'], scheme.colors[0][0]], scheme.noData,  // Below minimum
+          ['<', ['get', 'score'], scheme.colors[1][0]], scheme.colors[0][1],  // First range
+          ['<', ['get', 'score'], scheme.colors[2][0]], scheme.colors[1][1],  // Second range
+          ['<', ['get', 'score'], scheme.colors[3][0]], scheme.colors[2][1],  // Third range
+          ['<', ['get', 'score'], scheme.colors[4][0]], scheme.colors[3][1],  // Fourth range
+          scheme.colors[4][1]  // Fifth range (highest)
+        ],
+        'fill-opacity': 0.85
+      }
+    });
       map.addLayer({
         id: 'country-outline',
         type: 'line',
