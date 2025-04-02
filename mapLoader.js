@@ -1,6 +1,8 @@
 // Function to search countries and show results
 function searchCountries(searchTerm) {
     if (!geoData) return;
+
+    console.log("SEARCH TERM", searchTerm)
     
     searchTerm = searchTerm.toLowerCase().trim();
     
@@ -88,7 +90,7 @@ function showCountryDetails(countryName) {
     
     // Build popup HTML
     let popupHTML = `
-    <div class="country-popup">
+    <div class="country-popup" id="country-popup">
       <h3>${countryName}</h3>
       <table class="popup-table">
         <tr>
@@ -165,48 +167,5 @@ function showCountryDetails(countryName) {
 
 // Set up event listeners once the map is loaded
 map.on('load', () => {
-    const searchInput = document.getElementById('country-search');
-    const searchButton = document.getElementById('search-button');
-    if (searchButton && searchInput) {
-
-    // Search when button is clicked
-    searchButton.addEventListener('click', () => {
-      searchCountries(searchInput.value);
-    });
-    
-    // Search as user types
-    searchInput.addEventListener('input', () => {
-      searchCountries(searchInput.value);
-    });
-    
-    // Handle Enter key press
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        // If there are search results and the first one is visible
-        if (searchResultsContainer.style.display === 'block' && 
-            searchResultsContainer.querySelector('.search-result-item')) {
-          
-          // Get the first country from results
-          const firstCountry = searchResultsContainer.querySelector('.search-result-item').textContent;
-          
-          // If it's not "No countries found", select it
-          if (firstCountry !== 'No countries found') {
-            showCountryDetails(firstCountry);
-            searchResultsContainer.style.display = 'none';
-            searchInput.value = firstCountry;
-          }
-        } else {
-          // Otherwise just perform the search
-          searchCountries(searchInput.value);
-        }
-      }
-    });
-    
-    // Hide search results when clicking elsewhere
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.search-container') && !e.target.closest('.search-results')) {
-        searchResultsContainer.style.display = 'none';
-      }
-    });
-    }
+    createSearchBar()
   });

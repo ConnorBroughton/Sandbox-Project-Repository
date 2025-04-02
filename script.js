@@ -6,12 +6,13 @@ const map = new mapboxgl.Map({
   center: [20, 5],
   zoom: 2.3,
   minZoom: 1,
-  maxZoom: 3
+  maxZoom: 3,
 });
 
 let parsedData = []; // Store CSV rows in memory
 let geoData = null;  // Original GeoJSON
 let currentDimension; // Track the current dimension
+let mapMoved = false;
 
 // Load GeoJSON and CSV once
 Promise.all([
