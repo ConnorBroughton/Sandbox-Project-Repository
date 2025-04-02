@@ -309,7 +309,34 @@ function updateMapForDimension(dimension) {
       currentClickPopup = null;
     }
   });
-  
+  if (!map.getLayer('choropleth-border')) {
+    map.addLayer({
+      'id': 'choropleth-border',
+      'type': 'line',
+      'source': 'countries',
+      'layout': {
+          'visibility': 'visible'
+      },
+      'paint': {
+          'line-color': '#000000', // Border color
+          
+      }
+  });
+  } else {
+    map.removeLayer('choropleth-border')
+    map.addLayer({
+      'id': 'choropleth-border',
+      'type': 'line',
+      'source': 'countries',
+      'layout': {
+          'visibility': 'visible'
+      },
+      'paint': {
+          'line-color': '#000000', // Border color
+          
+      }
+    })
+  }
     // Add a legend to the map
     updateLegend(dimension);
   }

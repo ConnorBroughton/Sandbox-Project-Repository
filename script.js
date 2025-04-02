@@ -2,11 +2,13 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kZXI5MjQiLCJhIjoiY201b2RweHNhMGxjazJscTI0c
 
 const map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/light-v11", // Using a default Mapbox style
+  style: "mapbox://styles/mapbox/navigation-day-v1", // Using a default Mapbox style
   center: [20, 5],
   zoom: 2.3,
   minZoom: 1,
   maxZoom: 3,
+  projection: 'mercator'
+  // projection: 'mercator'
 });
 
 let parsedData = []; // Store CSV rows in memory

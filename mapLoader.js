@@ -167,5 +167,9 @@ function showCountryDetails(countryName) {
 
 // Set up event listeners once the map is loaded
 map.on('load', () => {
-    createSearchBar()
+    createSearchBar();
+    const labelLayers = map.getStyle().layers.filter(layer => layer.type === 'symbol');
+    labelLayers.forEach(layer => {
+        map.setLayoutProperty(layer.id, 'visibility', 'none');
+    });
   });
