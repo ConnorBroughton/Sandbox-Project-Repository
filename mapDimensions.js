@@ -1,3 +1,4 @@
+// update legend based on selection
 function updateMapForDimension(dimension) {
     // Update the current dimension globally
     currentDimension = dimension;
