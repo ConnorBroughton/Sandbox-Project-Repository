@@ -752,3 +752,60 @@ nav a.active {
     padding: 15px;
   }
 }
+/* Updated Step Image Styling */
+.step-img {
+  width: 100%;
+  height: 120px; /* Reduced height to better match your nav image ratio */
+  background-color: #f8f9fa;
+  background-size: contain; /* Changed from cover to contain */
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.7); /* Darkened text color for better visibility */
+  position: relative;
+  border: 1px solid #e0e0e0; /* Light border to define the image area */
+  padding: 10px;
+}
+
+/* Caption styling */
+.step-img-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 5px 0;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+}
+
+/* For images that need specific aspect ratio preservation */
+.step-img.nav-image {
+  background-size: contain;
+  padding: 5px 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .step-img {
+    height: 100px;
+  }
+}
+
+/* Make headers look clickable */
+.static-dimension .dimension-header {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.static-dimension .dimension-header:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
