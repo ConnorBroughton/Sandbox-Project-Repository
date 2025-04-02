@@ -761,3 +761,22 @@ nav a.active {
     padding: 15px;
   }
 }
+
+/* Style for dimension headers */
+.static-dimension .dimension-header {
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect */
+.static-dimension .dimension-header:hover {
+  background-color: #0201010b;
+}
+
+/* Initially hide all subdimension grids */
+.subdimension-grid {
+  display: none;
+}
