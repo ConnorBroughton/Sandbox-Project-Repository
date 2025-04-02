@@ -167,8 +167,7 @@ function showCountryDetails(countryName) {
 map.on('load', () => {
     const searchInput = document.getElementById('country-search');
     const searchButton = document.getElementById('search-button');
-    if (searchButton && searchInput) {
-
+    
     // Search when button is clicked
     searchButton.addEventListener('click', () => {
       searchCountries(searchInput.value);
@@ -208,5 +207,4 @@ map.on('load', () => {
         searchResultsContainer.style.display = 'none';
       }
     });
-    }
   });
