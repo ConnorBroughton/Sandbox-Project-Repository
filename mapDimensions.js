@@ -34,7 +34,7 @@ function updateMapForDimension(dimension) {
       });
     }
       // Create a more distinct color scheme for the selected dimension
-const colorSchemes = {
+  const colorSchemes = {
     "System Performance": {
       noData: '#ccc',
       colors: [
@@ -83,12 +83,6 @@ const colorSchemes = {
   if (map.getLayer('country-fill')) {
     map.removeLayer('country-fill');
   }
-  if (map.getLayer('country-outline')) {
-      map.removeLayer('country-outline');
-  }
-  if (map.getLayer('country-hover-outline')) {
-      map.removeLayer('country-hover-outline');
-  }
   // Create a simple classification with discrete color boundaries
   map.addLayer({
     id: 'country-fill',
@@ -108,22 +102,12 @@ const colorSchemes = {
       'fill-opacity': 0.85
     }
   });
-  
-      map.addLayer({
-        id: 'country-outline',
-        type: 'line',
-        source: 'countries',
-        paint: {
-          'line-color': '#fff',
-          'line-width': 1
-        }
-      });
 
       // Add cursor change on hover
       map.on('mouseenter', 'country-fill', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
-  
+
       map.on('mouseleave', 'country-fill', () => {
         map.getCanvas().style.cursor = '';
       });
@@ -165,7 +149,7 @@ const colorSchemes = {
         });
         
         let popupHTML = `
-      <div class="country-popup">
+      <div class="country-popup" id="country-popup">
         <h3>${countryName}</h3>
         <table class="popup-table">
           <tr>
@@ -240,7 +224,21 @@ const colorSchemes = {
         type: 'FeatureCollection',
         features: [feature]
       };
+
+      map.removeLayer('country-hover-outline');
       
+      // Add highlight outline around the hovered country
+      map.addLayer({
+        id: 'country-hover-outline',
+        type: 'line',
+        source: 'hover-source',
+        paint: {
+          'line-color': '#ffcc00', // Bright yellow highlight
+          'line-width': 3,
+          'line-opacity': 0.8
+        }
+      });
+
       map.getSource('hover-source').setData(hoverFeature);
     } else {
       // First time hover - create the source and layer
@@ -252,6 +250,7 @@ const colorSchemes = {
         }
       });
       
+
       // Add highlight outline around the hovered country
       map.addLayer({
         id: 'country-hover-outline',
