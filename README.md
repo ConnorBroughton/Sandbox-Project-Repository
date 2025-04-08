@@ -58,7 +58,7 @@ Algeria,System Performance,Economic Development and Growth,65.5
 Egypt,Transition Readiness,Regulation and Political Commitment,72.3
 Kenya,Tech Preparedness,Solar,58.9
 ```
-An example of the CSV structure will be added to the CATF spreadsheet for example use.
+An example of the CSV structure will be added to the CATF spreadsheet for example use under **Data Entry**.
 
 ### Upload Process
 
