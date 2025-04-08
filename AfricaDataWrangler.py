@@ -37,7 +37,7 @@ african_countries = [
     'Uganda', 'Somalia'
 ]
 
-# Function to generate fake data within ±15% of base value
+# Function to generate fake data within ±50% of base value
 def generate_similar_score(base_score):
     if pd.isna(base_score):
         return pd.NA

@@ -2,7 +2,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kZXI5MjQiLCJhIjoiY201b2RweHNhMGxjazJscTI0c
 
 const map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/navigation-day-v1", // Using a default Mapbox style
+  style: "mapbox://styles/mapbox/satellite-v9", // Using a default Mapbox style
   center: [20, 5],
   zoom: 2.3,
   minZoom: 1,
@@ -60,5 +60,4 @@ function computeAverageScores(data, dimension) {
   }
   return averages;
 }
-
 
