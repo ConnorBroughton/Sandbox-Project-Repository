@@ -45,19 +45,36 @@ function parseCSV(text) {
 
 // Compute average scores by country for a given dimension
 function computeAverageScores(data, dimension) {
+  // Create an object to group scores by country
   const grouped = {};
+
+  // Iterate through the data to group scores
   data.forEach(row => {
+    // Only process rows matching the specified dimension and with valid scores
     if (row.Dimension === dimension && !isNaN(row.Score)) {
+      // Initialize an array for the country if it doesn't exist
       if (!grouped[row.COUNTRYAFF]) grouped[row.COUNTRYAFF] = [];
+      
+      // Add the score to the country's array of scores
       grouped[row.COUNTRYAFF].push(row.Score);
     }
   });
 
+  // Create an object to store average scores
   const averages = {};
+
+  // Calculate the average score for each country
   for (const country in grouped) {
+    // Get all scores for the current country
     const scores = grouped[country];
+    
+    // Calculate average by summing all scores and dividing by number of scores
+    // reduce() adds up all scores (a + b), starting with initial value 0
+    // Then divide by the total number of scores to get the mean
+    // Claude 3.7 came up with this optimized solution and I am using it here
     averages[country] = scores.reduce((a, b) => a + b, 0) / scores.length;
   }
+
+  // Return the object with countries and their average scores
   return averages;
 }
-
