@@ -1,5 +1,95 @@
-# Sandbox-Project-Repository
- The 2020s are projected to be a strong economic decade for the African continent. Overall, real gross domestic product (real GDP) growth for the continent was 3.8% in 2024 and is expected to average 4.2% in 2025 (African Development Bank 2024). A key to maintaining this level of economic growth is the investment that the continent makes in developing energy infrastructure, because the use of energy drives economic productivity and industrial growth (Asghar 2008). However, in a world of rising greenhouse gas emissions and changing climate, it is necessary that in developing this energy infrastructure, Africa is prepared to address rising expectations of improved resilience and sustainability. 
-Our Sandbox project, in collaboration with Clean Air Task Force (CATF), explores the readiness for renewable energies in several countries across Africa. We will help the organization to build a web map that visualizes specific regions in Africa and their individual needs, barriers and capabilities for a variety of renewable energy sources. This work is necessary because the Energy and Climate Innovation Africa (ECI) program at CATF indicates “a significant gap with regards to the assessment of low-carbon technologies and fuel within Africa” (CATF 2025).
-The webpage will focus on both the number of clean energy initiatives taking place in each country within Africa, along with different types of technologies being used. In addition, information about the technologies in place, the countries themselves, and the advancements necessary to achieve climate goals. The target audience for the web map is broad, however, possible viewership could include policy makers, government officials, advocates, and individuals interested in the topic of clean energy in an African context.
+# CATF African Renewable Energy Transition Map
 
+## Project Overview
+
+The CATF African Renewable Energy Transition Map is an interactive web application developed in collaboration with the Clean Air Task Force, University of Toronto's Geography & Planning department, the Munk School of Global Affairs, and Georgetown University. The tool provides a comprehensive visualization of energy technology deployment and readiness across African countries.
+
+## Key Features
+
+- Interactive map of African countries
+- Three primary dimensions of analysis:
+  1. System Performance
+  2. Transition Readiness
+  3. Technology-Specific Preparedness
+- Detailed country-level energy metrics
+- Comprehensive methodology and data sources
+
+## Tech Stack
+- HTML5
+- CSS3
+- JavaScript
+- Mapbox GL JS
+- CSV data processing
+
+## How to Use the Tool
+
+1. **Navigate Dimensions**
+   - Use the navigation bar to switch between:
+     - Introduction
+     - Methodology
+     - System Performance
+     - Transition Readiness
+     - Tech Preparedness
+
+2. **Explore the Map**
+   - Click on countries to view detailed metrics
+   - Use the search bar to find specific countries
+   - Hover over countries to see basic information
+
+## Data Upload Guide
+
+### CSV File Structure
+
+To upload new data, you must follow a specific CSV file structure. The CSV should have the following columns:
+
+1. **COUNTRYAFF**: Country name (must match exactly with country names in the GeoJSON file)
+2. **Dimension**: One of three dimensions
+   - "System Performance"
+   - "Transition Readiness"
+   - "Tech Preparedness"
+3. **Sub-Dimension**: Specific sub-category within the dimension
+4. **Score**: Numerical score (0-100)
+
+### Example CSV Structure
+
+```csv
+COUNTRYAFF,Dimension,Sub-Dimension,Score
+Algeria,System Performance,Economic Development and Growth,65.5
+Egypt,Transition Readiness,Regulation and Political Commitment,72.3
+Kenya,Tech Preparedness,Solar,58.9
+```
+An example of the CSV structure will be added to the CATF spreadsheet for example use.
+
+### Upload Process
+
+1. Ensure your CSV follows the exact structure above
+2. Replace the existing CSV file in the project repository
+3. The file should be named `Africa_Energy_Index_Data_Final.csv`
+4. Maintain the exact column names and order
+
+### Validation Tips
+
+- Double-check country names for exact matches
+- Ensure scores are between 0 and 100
+- Include all three dimensions
+- Cover sub-dimensions as defined in the methodology
+
+## Data Sources
+
+The project draws data from:
+- World Bank
+- International Energy Agency (IEA)
+- International Renewable Energy Agency (IRENA)
+- United Nations
+- IMF
+- And many other reputable international organizations
+
+
+## Contributing
+
+Contributions are welcome! Please:
+- Follow the data upload guidelines
+- Verify data accuracy
+- Maintain the existing code structure
+
+- contact glaser.jag@gmail.com for any questions or inquiries
